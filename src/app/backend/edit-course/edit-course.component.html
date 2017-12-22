@@ -1,0 +1,128 @@
+<div class="container-fluid">
+  <div class="row">
+      <mat-card class="mt-3 w-100 p-0">
+          <div class="list-group w-100 text-center">
+              <div class="bg-danger text-white card-header text-center font-weight-bold">開始選課</div>
+              <div class="card-body card-padding">
+                  <form class="d-flex flex-row justify-content-around align-content-between"
+                      [formGroup]="courseForm">
+                    <div class="form-position d-flex flex-row justify-content-around align-items-baseline align-content-between flex-nowrap">
+                      <mat-form-field class="setWidth">
+                          <mat-select formControlName="college" placeholder="學院" [(value)]="selected" (click)="onOpen()">
+                            <mat-option *ngFor="let row of mainService.CollegeList" [value]="row.college">
+                              {{row.college}}
+                            </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                      <mat-form-field class="setWidth">
+                          <mat-select formControlName="department" placeholder="系所">
+                            <div *ngFor="let rows of mainService.CollegeList;">
+                              <div *ngIf="rows.college === selected">
+                                  <mat-option  *ngFor="let row of rows.dep" [value]="row.sim_department">
+                                      {{row.department}}
+                                    </mat-option>
+                              </div>
+                            </div>
+                          </mat-select>
+                      </mat-form-field>
+                      <mat-form-field class="setWidth">
+                          <mat-select formControlName="level" placeholder="年級">
+                              <mat-option value="一">一年級</mat-option>
+                              <mat-option value="二">二年級</mat-option>
+                              <mat-option value="三">三年級</mat-option>
+                              <mat-option value="四">四年級</mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                      <mat-form-field class="setWidth">
+                          <mat-select formControlName="require" placeholder="修別">
+                            <mat-option value="不拘">不拘</mat-option>
+                            <mat-option value="必修">必修</mat-option>
+                            <mat-option value="選修">選修</mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                      <button mat-raised-button
+                              class="ml-2"
+                              color="warn"
+                              (click)="onSearch()">查詢</button>
+                  </div>
+                </form>
+              </div>
+          </div>
+      </mat-card>
+  </div>
+  <div class="row">
+      <mat-card class="mt-3 w-100 ">
+          <form class="form-inline" [formGroup]="editForm">
+            <div class="row">
+              <div class="btn btn-primary mb-2" (click)="onUpdate()">更新</div>
+              <div class="btn btn-danger mb-2 ml-2" (click)="onDelete() ">刪除</div>
+            </div>
+            <div class="row d-flex justify-content-between">
+                <input type="text"
+                       class="form-control col-1"
+                       maxlength="6"
+                       placeholder="選課代碼"
+                       formControlName="code"
+                       [(ngModel)]="code">
+                <input type="text"
+                       class="form-control col-3"
+                       maxlength="15"
+                       placeholder="課程名稱"
+                       formControlName="courseName"
+                       [(ngModel)]="courseName">
+                <input type="text"
+                       class="form-control col-1"
+                       maxlength="10"
+                       placeholder="授課教師"
+                       formControlName="teacherName"
+                       [(ngModel)]="teacherName">
+                <input type="text"
+                       class="form-control col-1"
+                       maxlength="10"
+                       placeholder="教室"
+                       formControlName="site"
+                       [(ngModel)]="site">
+                <input type="text"
+                       class="form-control col-1"
+                       maxlength="3"
+                       placeholder="星期"
+                       formControlName="date"
+                       [(ngModel)]="date">
+                <input type="text"
+                       class="form-control col-1"
+                       maxlength="3"
+                       placeholder="時段"
+                       formControlName="time"
+                       [(ngModel)]="time">
+                <input type="text"
+                       class="form-control col-1"
+                       maxlength="2"
+                       placeholder="修別"
+                       formControlName="require"
+                       [(ngModel)]="require">
+                <input type="text"
+                       class="form-control col-1"
+                       maxlength="1"
+                       placeholder="學分"
+                       formControlName="score"
+                       [(ngModel)]="score">
+                <input type="text"
+                       class="form-control col-1"
+                       maxlength="3"
+                       placeholder="開課班級"
+                       formControlName="level"
+                       [(ngModel)]="level">
+            </div>
+          </form>
+      </mat-card>
+  </div>
+  <div class="row">
+      <mat-card class="mt-3 w-100 p-0">
+          <ul class="list-group">
+              <li class="list-group-item list-group-item-action"
+                  *ngFor="let item of courseInfo; let i=index"
+                  (click)="onEdit(i)">{{item.code}}-{{item.courseName}}</li>
+            </ul>
+      </mat-card>
+  </div>
+</div>

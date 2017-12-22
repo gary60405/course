@@ -1,0 +1,64 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+html, body {
+  background-color:#eee !important;
+  user-select: none;
+  font-family: "微軟正黑體";
+}
+.mat-ink-bar {
+  background-color: #fd7e14 !important;
+}
+.mat-form-field-ripple {
+  background-color: #007bff;
+}
+.mat-tab-labels {
+  justify-content:center;
+}
+
+.mat-tab-label {
+  font-weight:900 !important;
+}
+.mat-tab-label-active {
+  background-color: #ddd;
+}
+.mat-tab-body-wrapper {
+  height: 70vh;
+}
+
+.mat-tab-body-content {
+  display: flex;
+  position: relative;
+  top:-5%;
+  flex-direction:row;
+  justify-content:center;
+  padding: 5%;
+  height: 60Vh !important;
+}
+.mat-input-container {
+  font-size: 1.5rem;
+  width: 500px;
+}
+
+.mat-simple-snackbar {
+  align-items: center;
+  justify-content: center !important;
+  font-size: 20px;
+}
+.mat-simple-snackbar-action {
+  font-weight: 900;
+}
+
+.mat-tab-body.mat-tab-body-active {
+  overflow: visible !important;
+}
+
+.mat-paginator-container {
+  min-height: 2rem !important;
+  max-height: 3rem !important;
+}
+
+a.list-group-item-light.active, button.list-group-item-light.active {
+  background-color: #dddfe2 !important;
+  border-color: #dddfe2 !important;
+  color: #464a4e !important;
+}

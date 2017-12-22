@@ -1,0 +1,44 @@
+<div class="container-fluid">
+    <div class="row">
+        <mat-card class="mt-3 w-100 p-0">
+            <div class="list-group w-100 text-center">
+                <div class="bg-info text-white card-header text-center font-weight-bold">選課清單</div>
+                <div class="card-body card-padding">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">開課班級</th>
+                            <th scope="col">課程代碼</th>
+                            <th scope="col">課程名稱</th>
+                            <th scope="col">任課教授</th>
+                            <th scope="col">修別</th>
+                            <th scope="col w-25">學分</th>
+                            <th scope="col w-25">星期</th>
+                            <th scope="col">節次</th>
+                            <th scope="col">教室</th>
+                            <th scope="col"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of this.collegeService.selectedCourse; let i = index">
+                            <th scope="row">{{item.level}}</th>
+                            <td>{{item.code}}</td>
+                            <td>{{item.courseName}}</td>
+                            <td>{{item.teacherName}}</td>
+                            <td>{{item.require}}</td>
+                            <td>{{item.score}}</td>
+                            <td>{{item.date}}</td>
+                            <td>{{item.time}}</td>
+                            <td>{{item.site}}</td>
+                            <td><button mat-raised-button color="accent" (click)="onDelete(i)">刪除</button></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="alert alert-info" role="alert">
+                        共{{collegeService.selectedCourse.length}}門課，共{{score}}學分
+                        </div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+  </div>

@@ -1,0 +1,9 @@
+.shrink {
+  width: 1rem;
+  height: 150px;
+}
+
+td {
+  min-width: 100px;
+  max-width: 100px;
+}

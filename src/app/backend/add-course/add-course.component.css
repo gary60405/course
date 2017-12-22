@@ -1,0 +1,34 @@
+.fix-height {
+  min-height: calc(100vh - 64px - 32px - 16px);
+}
+
+.set-height {
+  min-height: calc(100vh - 64px - 32px - 16px - 48px);
+}
+
+.paper {
+  margin-top:10%;
+  position: relative;
+  border: 1px solid #000;
+  height:500px;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.head {
+  width: 100%;
+  border-radius: 5px 5px 0px 0px;
+  background-color: #444;
+  height: 15px;
+}
+
+.body {
+  position: relative;
+  top: 5px;
+  text-align: left;
+}
+.body p {
+  margin-left: 5%;
+}
+
+
+

@@ -1,0 +1,59 @@
+.tab-position {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+}
+.tab-size {
+  width: 100%;
+  height: 60vh;
+}
+
+.fix-login {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  color: #333;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-70%);
+  width: 50%;
+}
+
+h6 {
+  font-weight: 900 !important;
+  color: #666;
+  font-size: 1.1rem;
+  transform: translate(-70%, 30%);
+}
+.select-width {
+  width: 50% !important;
+}
+.select-group {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width:50%;
+}
+
+button {
+  width: 90px;
+  min-height: 40px;
+  font-size: 20px !important;
+}
+
+mat-form-field {
+  margin-bottom: 3%;
+}
+
+

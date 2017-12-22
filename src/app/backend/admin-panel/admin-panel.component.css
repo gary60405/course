@@ -1,0 +1,12 @@
+.card-size {
+  position: relative;
+  margin-top: 5%;
+  max-width: 100%;
+  width: 500px;
+  padding: 0px !important;
+}
+.side-fiexd {
+  position: fixed;
+  width: 15%;
+}
+

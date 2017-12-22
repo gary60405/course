@@ -1,0 +1,38 @@
+mat-form-field {
+  width: 20% !important;
+}
+.form-position {
+  width:85%;
+}
+
+.card-padding {
+  padding-top: 20px;
+  padding-bottom: 5px;
+}
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+mat-header-cell:first-child {
+  max-width: 5%;
+}
+mat-cell:first-child {
+  max-width: 5%;
+}
+
+mat-paginator {
+  max-height: 10px;
+}
+
+.btn-size {
+  /* margin: 10px !important; */
+  width: 30px !important;
+  height: 30px !important;
+}
+

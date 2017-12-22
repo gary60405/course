@@ -1,0 +1,79 @@
+import { Site } from './../../core/main.models';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import 'rxjs/add/operator/map';
+
+@Injectable()
+export class BackendService {
+
+  constructor(private httpClient: HttpClient) { }
+  public siteList: Site[];
+  public teacherList: string[];
+
+  getTeacherList(department) {
+    let departmentList = [];
+    this.httpClient.get('http://127.0.0.1:8000/api/department/?format=json')
+    .map((items: any[]) => {
+      let i = items.length;
+      while (i--) {
+        items[i] = items[i].department;
+      }
+      return items;
+    })
+    .subscribe((data) => {
+      departmentList = data;
+    });
+    this.httpClient.get('http://127.0.0.1:8000/api/teacher/?format=json')
+    .map((rows: any[]) => {
+      rows = rows.filter(item => departmentList[item.department - 1] === department);
+      let i = rows.length;
+      while (i--) {
+        rows[i] = rows[i].teacherName;
+      }
+      return rows;
+    })
+    .subscribe((data) => {
+      this.teacherList = data;
+    });
+  }
+
+  getSiteList() {
+    this.httpClient.get('http://127.0.0.1:8000/api/site/?format=json')
+      .map((rows: any[]) => {
+        let wrapList = [];
+        let wrapObject = {district: '', site: []};
+        let site = {name: '', classRoom: []};
+        let i = rows.length;
+        while (i--) {
+          if (wrapList.find(item => item.district === rows[i].district) !== undefined) {
+            if (wrapObject.site.find(item => item.name === rows[i].site) !== undefined) {
+              site.classRoom.push(rows[i].classRoom);
+            } else {
+              site = {name: '', classRoom: []};
+              site.name = rows[i].site;
+              site.classRoom.push(rows[i].classRoom);
+              wrapObject.site.push(site);
+            }
+          } else {
+            site = {name: '', classRoom: []};
+            wrapObject = {district: '', site: []};
+            wrapObject.district = rows[i].district;
+            site.name = rows[i].site;
+            site.classRoom.push(rows[i].classRoom);
+            wrapObject.site.push(site);
+            wrapList.push(wrapObject);
+            wrapList = wrapList.reverse();
+          }
+        }
+          wrapList.map((item) => {
+            item.site.reverse();
+            item.site.map(subItem => subItem.classRoom.reverse());
+          });
+          return wrapList;
+      })
+      .subscribe((data) => {
+        this.siteList = data;
+      });
+
+  }
+}

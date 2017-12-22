@@ -1,0 +1,139 @@
+<div class="container">
+  <div class="row">
+    <div class="tab-position">
+        <mat-tab-group  [(selectedIndex)]="currentTabIndex" dynamicHeight="false" class="tab-size">
+            <mat-tab label="登入">
+                <form class="d-flex flex-column justify-content-center align-items-center"
+                      [formGroup]="signInForm"
+                      (ngSubmit)="onSignInSubmit()">
+                    <mat-form-field>
+                      <input matInput
+                             placeholder="Email"
+                             formControlName="email">
+                      <mat-error *ngIf="signInForm.get('email').hasError('required')">
+                        Email不可以空白
+                      </mat-error>
+                      <mat-error *ngIf="signInForm.get('email').hasError('email')">
+                        請按照Email的格式填寫
+                      </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <input matInput
+                             placeholder="Password"
+                             formControlName="password"
+                             [type]="hideForSignIn ? 'password' : 'text'">
+                      <mat-icon matSuffix (click)="hideForSignIn = !hideForSignIn">{{hideForSignIn ? 'visibility' : 'visibility_off'}}</mat-icon>
+                      <mat-error *ngIf="signInForm.get('password').hasError('required')">
+                          Password不可以空白
+                      </mat-error>
+                    </mat-form-field>
+
+                    <button color="accent"
+                            type="submit"
+                            mat-raised-button
+                            [disabled]="signInForm.get('password').invalid || signInForm.get('password').invalid">登入</button>
+
+                    <div class="fix-login">
+                        <h6>快速登入</h6>
+                        <i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i>
+                        <i class="fa fa-github fa-3x" aria-hidden="true"></i>
+                        <i class="fa fa-google fa-3x" aria-hidden="true"></i>
+                    </div>
+                  </form>
+
+            </mat-tab>
+
+            <mat-tab label="註冊">
+                <form class="d-flex flex-column justify-content-center align-items-center"
+                      [formGroup]="signUpForm">
+                  <mat-form-field *ngIf="!isNext">
+                    <input matInput
+                           placeholder="Email"
+                           formControlName="email">
+                    <mat-error *ngIf="signUpForm.get('password').hasError('required')">
+                      Email不可以空白
+                    </mat-error>
+                    <mat-error *ngIf="signUpForm.get('password').hasError('email')">
+                      請按照Email的格式填寫
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field *ngIf="!isNext">
+                    <input matInput
+                           placeholder="Password"
+                           formControlName="password"
+                           [type]="hideForSignUp ? 'password' : 'text'">
+                    <mat-icon matSuffix (click)="hideForSignUp = !hideForSignUp">{{hideForSignUp ? 'visibility' : 'visibility_off'}}</mat-icon>
+                    <mat-error *ngIf="signUpForm.get('password').hasError('required')">
+                        Password不可以空白
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="isNext">
+                      <input  matInput
+                              type="text"
+                              placeholder="學號"
+                              formControlName="id"
+                              maxlength="9">
+                      <mat-error *ngIf="signUpForm.get('id').hasError('required')">
+                          學號為必填項目
+                      </mat-error>
+                      <mat-error *ngIf="signUpForm.get('id').hasError('pattern')">
+                          第一字為大寫字母後面接8個數字 ex：S1045001
+                      </mat-error>
+                      <mat-error *ngIf="signUpForm.get('id').hasError('checkStudentID')">
+                        該學號已被註冊過!
+                    </mat-error>
+                    </mat-form-field>
+                  <mat-form-field *ngIf="isNext">
+                    <input matInput
+                            type="text"
+                            placeholder="姓名"
+                            formControlName="name"
+                            maxlength="10">
+                    <mat-error *ngIf="signUpForm.get('name').hasError('required')">
+                        姓名為必填項目
+                    </mat-error>
+                    <mat-error *ngIf="signUpForm.get('name').hasError('pattern')">
+                        請勿輸入中英文以外的字元
+                    </mat-error>
+                  </mat-form-field>
+                  <div class="select-group">
+                      <mat-form-field *ngIf="isNext" class="select-width">
+                        <mat-select placeholder="系別"
+                                    formControlName="department">
+                          <mat-optgroup *ngFor="let group of mainService.CollegeList" [label]="group.college">
+                            <mat-option *ngFor="let dep of group.dep" [value]="dep.sim_department">
+                              {{ dep.department }}
+                            </mat-option>
+                          </mat-optgroup>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field *ngIf="isNext" class="select-width">
+                        <mat-select placeholder="年級"
+                                    formControlName="grade">
+                          <mat-option value="一">一年級</mat-option>
+                          <mat-option value="二">二年級</mat-option>
+                          <mat-option value="三">三年級</mat-option>
+                          <mat-option value="四">四年級</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                  </div>
+                  <div class="button-group">
+                    <button color="primary"
+                            *ngIf="isNext"
+                            mat-raised-button
+                            (click)="isNext = !isNext">上一步</button>
+                    <button color="accent"
+                            mat-raised-button
+                            (click)="isNext ? onSignUpSubmit() : onNextStep()"
+                            [disabled]="!isNext ? signUpForm.get('password').invalid || signUpForm.get('email').invalid : signUpForm.get('id').invalid || signUpForm.get('name').invalid || signUpForm.get('department').invalid || signUpForm.get('grade').invalid">
+                            {{!isNext ? '下一步' : '註冊'}}
+                    </button>
+                  </div>
+                </form>
+              </mat-tab>
+          </mat-tab-group>
+    </div>
+  </div>
+</div>
