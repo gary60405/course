@@ -29,24 +29,24 @@ export class HomeComponent implements OnInit {
   name: string;
   department: string;
   grade: string;
-
-  signInForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required])
-  });
-
-  signUpForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email], this.checkEmailValidator.bind(this)),
-    password: new FormControl('', [Validators.required]),
-    id: new FormControl('', [Validators.required, Validators.pattern('^[A-Z][0-9]{8}$')], this.checkStudentIDValidator.bind(this)),
-    name: new FormControl('', [Validators.required, Validators.pattern('^[\u4e00-\u9fa5a-zA-Z]+$')]),
-    department: new FormControl('', [Validators.required]),
-    grade: new FormControl('', [Validators.required])
-  });
+  signInForm: FormGroup;
+  signUpForm: FormGroup;
 
   ngOnInit() {
     this.mainService.getCollegeList();
     this.coreService.getStudentData();
+    this.signInForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required])
+    });
+    this.signUpForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email, this.checkEmailValidator.bind(this)]),
+      password: new FormControl('', [Validators.required]),
+      id: new FormControl('', [Validators.required, Validators.pattern('^[A-Z][0-9]{8}$'), this.checkStudentIDValidator.bind(this)]),
+      name: new FormControl('', [Validators.required, Validators.pattern('^[\u4e00-\u9fa5a-zA-Z]+$')]),
+      department: new FormControl('', [Validators.required]),
+      grade: new FormControl('', [Validators.required])
+    });
   }
 
   onSignInSubmit() {
@@ -73,9 +73,9 @@ export class HomeComponent implements OnInit {
   }
 
   checkStudentIDValidator(control: FormControl) {
-    const formValue = this.signUpForm.value;
     this.coreService.getStudentData();
-    const isFind = this.coreService.studentDataList.find(item => item.studentID === formValue.id);
+    const studentIDList = this.coreService.studentDataList.map(item => item = item.studentID);
+    const isFind = studentIDList.find(item => item === control.value);
     if (isFind !== undefined) {
       return {'checkStudentID': true};
     } else {
@@ -85,13 +85,13 @@ export class HomeComponent implements OnInit {
 
   checkEmailValidator(control: FormControl) {
     this.coreService.getStudentData();
-    const formValue = this.signUpForm.value;
-    const isFind = this.coreService.studentDataList.find(item => item.account === formValue.email);
-    console.log(isFind);
+    const emailList = this.coreService.studentDataList.map(item => item = item.account);
+    const isFind = emailList.find(item => item === control.value);
     if (isFind !== undefined) {
       return {'checkEmail': true};
+    } else {
+      return null;
     }
-    return null;
   }
 
   openSnackBar() {

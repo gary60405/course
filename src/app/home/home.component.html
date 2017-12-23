@@ -51,11 +51,14 @@
                     <input matInput
                            placeholder="Email"
                            formControlName="email">
-                    <mat-error *ngIf="signUpForm.get('password').hasError('required')">
+                    <mat-error *ngIf="signUpForm.get('email').hasError('required')">
                       Email不可以空白
                     </mat-error>
-                    <mat-error *ngIf="signUpForm.get('password').hasError('email')">
+                    <mat-error *ngIf="signUpForm.get('email').hasError('email')">
                       請按照Email的格式填寫
+                    </mat-error>
+                    <mat-error *ngIf="signUpForm.get('email').hasError('checkEmail')">
+                      該email已被註冊!
                     </mat-error>
                   </mat-form-field>
 
