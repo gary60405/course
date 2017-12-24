@@ -16,7 +16,7 @@ export class MainService {
   dialogDisplaySubject = new Subject();
 
   getCourseCode() {
-    this.httpClient.get<any>('http://127.0.0.1:8000/api/course/?format=json')
+    this.httpClient.get<any>('https://garycourse.herokuapp.com/api/course/')
     .map((courseList) => {
       let i = courseList.length;
       while (i--) {
@@ -30,7 +30,7 @@ export class MainService {
   }
 
   getCourseData(level, require) {
-    this.httpClient.get<Course[]>('http://127.0.0.1:8000/api/course/?format=json')
+    this.httpClient.get<Course[]>('https://garycourse.herokuapp.com/api/course/')
       .map((courseList: Course[]) => {
         if (require === '不拘') {
           courseList = courseList.filter(course => course.level === level);
@@ -47,7 +47,7 @@ export class MainService {
   }
 
   getAllCourseData() {
-    this.httpClient.get<Course[]>('http://127.0.0.1:8000/api/course/?format=json')
+    this.httpClient.get<Course[]>('https://garycourse.herokuapp.com/api/course/')
       .map((courseList: Course[]) => {
         return courseList;
       })
@@ -59,7 +59,7 @@ export class MainService {
 
   getCollegeList() {
     this.CollegeList = [];
-    this.httpClient.get('http://127.0.0.1:8000/api/college/?format=json')
+    this.httpClient.get('https://garycourse.herokuapp.com/api/college/')
       .map((rows: any[]) => {
        let i = rows.length;
        while (i--) {
@@ -71,7 +71,7 @@ export class MainService {
         this.collegeList = data;
       });
 
-    this.httpClient.get('http://127.0.0.1:8000/api/department/?format=json')
+    this.httpClient.get('https://garycourse.herokuapp.com/api/department/')
       .map((rows: any[]) => {
         let i = rows.length;
         while (i--) {

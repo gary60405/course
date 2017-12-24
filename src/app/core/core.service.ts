@@ -11,7 +11,7 @@ export class CoreService {
   public studentDataList = [];
 
  getStudentData() {
-  this.httpClient.get<StudentData[]>('http://127.0.0.1:8000/api/student/')
+  this.httpClient.get<StudentData[]>('https://garycourse.herokuapp.com/api/student/')
   .subscribe(list => {
     this.studentDataList = list;
   });

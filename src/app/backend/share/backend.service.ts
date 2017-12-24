@@ -12,7 +12,7 @@ export class BackendService {
 
   getTeacherList(department) {
     let departmentList = [];
-    this.httpClient.get('http://127.0.0.1:8000/api/department/?format=json')
+    this.httpClient.get('https://garycourse.herokuapp.com/api/department/')
     .map((items: any[]) => {
       let i = items.length;
       while (i--) {
@@ -23,7 +23,7 @@ export class BackendService {
     .subscribe((data) => {
       departmentList = data;
     });
-    this.httpClient.get('http://127.0.0.1:8000/api/teacher/?format=json')
+    this.httpClient.get('https://garycourse.herokuapp.com/api/teacher/')
     .map((rows: any[]) => {
       rows = rows.filter(item => departmentList[item.department - 1] === department);
       let i = rows.length;
@@ -38,7 +38,7 @@ export class BackendService {
   }
 
   getSiteList() {
-    this.httpClient.get('http://127.0.0.1:8000/api/site/?format=json')
+    this.httpClient.get('https://garycourse.herokuapp.com/api/site/')
       .map((rows: any[]) => {
         let wrapList = [];
         let wrapObject = {district: '', site: []};

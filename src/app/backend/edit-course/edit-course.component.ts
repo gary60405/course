@@ -82,7 +82,7 @@ export class EditCourseComponent implements OnInit {
       this.courseInfo[this.currentIndex] = obj;
       this.mainService.CourseInfo[this.currentIndex] = obj;
       console.log(this.mainService.CourseInfo[this.currentIndex]);
-      this.httpClient.patch(`http://127.0.0.1:8000/api/course/${obj.id}/`, this.editForm.value)
+      this.httpClient.patch(`https://garycourse.herokuapp.com/api/course/${obj.id}/`, this.editForm.value)
       .subscribe(
           res => console.log(res),
           err => console.log(err)
@@ -104,7 +104,7 @@ export class EditCourseComponent implements OnInit {
       obj.id = this.mainService.CourseInfo[this.currentIndex].id;
       this.courseInfo.splice(this.currentIndex, 1);
       this.mainService.CourseInfo.splice(this.currentIndex, 1);
-      this.httpClient.delete(`http://127.0.0.1:8000/api/course/${obj.id}/`, this.editForm.value)
+      this.httpClient.delete(`https://garycourse.herokuapp.com/api/course/${obj.id}/`, this.editForm.value)
       .subscribe(
           res => console.log(res),
           err => console.log(err)

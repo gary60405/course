@@ -182,7 +182,7 @@ export class AddCourseComponent implements OnInit {
     sendObject['require'] = this.secondFormGroup.value.require;
     sendObject['score'] = this.secondFormGroup.value.score;
     sendObject['level'] = this.department + this.level;
-    this.httpClient.post('http://127.0.0.1:8000/api/course/?format=json', sendObject)
+    this.httpClient.post('https://garycourse.herokuapp.com/api/course/', sendObject)
       .subscribe(
         res => console.log(res),
         err => console.log(err)
