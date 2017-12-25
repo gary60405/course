@@ -50,6 +50,11 @@ export class HomeComponent implements OnInit {
   }
 
   onSignInSubmit() {
+    const email = this.signInForm.value.email;
+    const password = this.signInForm.value.password;
+    this.afAuth.auth.signInWithEmailAndPassword(email, password).catch(err => console.log(err));
+    const user = this.afAuth.auth.currentUser;
+    console.log(user);
     this.signInForm.reset();
     this.signInForm.disable();
     setTimeout(() => this.signInForm.enable(), 1000);
@@ -64,7 +69,7 @@ export class HomeComponent implements OnInit {
     const formValue = this.signUpForm.value;
     const email = formValue.email;
     const password = formValue.password;
-    // this.afAuth.auth.createUserWithEmailAndPassword(email, password).catch(err => console.log(err));
+    this.afAuth.auth.createUserWithEmailAndPassword(email, password).catch(err => console.log(err));
     this.openSnackBar();
     this.isNext = false;
     this.signUpForm.reset();

@@ -5,6 +5,7 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { MainService } from './main.service';
 import { FormGroup, FormControl} from '@angular/forms';
+import { setTimeout } from 'timers';
 
 @Component({
   selector: 'app-dialog-data',
@@ -73,6 +74,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.mainService.getCourseData(level, require);
     setTimeout(() => {
       this.mainService.getCourseData(level, require);
+      console.log(this.mainService.CourseInfo);
       this.ELEMENT_DATA = this.mainService.CourseInfo;
       this.dataSource = new MatTableDataSource<Element>(this.ELEMENT_DATA);
       this.dataSource.paginator = this.paginator;

@@ -22,7 +22,7 @@ html, body {
   background-color: #ddd;
 }
 .mat-tab-body-wrapper {
-  height: 70vh;
+  min-height: 70vh;
 }
 
 .mat-tab-body-content {
@@ -32,7 +32,7 @@ html, body {
   flex-direction:row;
   justify-content:center;
   padding: 5%;
-  height: 60Vh !important;
+  height: 70Vh !important;
 }
 .mat-input-container {
   font-size: 1.5rem;
