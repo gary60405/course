@@ -13,7 +13,7 @@
                       <mat-error *ngIf="signInForm.get('email').hasError('required')">
                         Email不可以空白
                       </mat-error>
-                      <mat-error *ngIf="signInForm.get('email').hasError('email')">
+                      <mat-error *ngIf="signInForm.get('email').hasError('email') && !signInForm.get('email').hasError('required')">
                         請按照Email的格式填寫
                       </mat-error>
                     </mat-form-field>
@@ -29,19 +29,12 @@
                       </mat-error>
                     </mat-form-field>
 
-                    <button color="accent"
+                    <button class="home"
+                            color="accent"
                             type="submit"
                             mat-raised-button
-                            [disabled]="signInForm.get('password').invalid || signInForm.get('password').invalid">登入</button>
-
-                    <div class="fix-login">
-                        <h6>快速登入</h6>
-                        <i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i>
-                        <i class="fa fa-github fa-3x" aria-hidden="true"></i>
-                        <i class="fa fa-google fa-3x" aria-hidden="true"></i>
-                    </div>
+                            [disabled]="signInForm.invalid">登入</button>
                   </form>
-
             </mat-tab>
 
             <mat-tab label="註冊">
@@ -54,7 +47,7 @@
                     <mat-error *ngIf="signUpForm.get('email').hasError('required')">
                       Email不可以空白
                     </mat-error>
-                    <mat-error *ngIf="signUpForm.get('email').hasError('email')">
+                    <mat-error *ngIf="signUpForm.get('email').hasError('email') && !signUpForm.get('email').hasError('required')">
                       請按照Email的格式填寫
                     </mat-error>
                     <mat-error *ngIf="signUpForm.get('email').hasError('checkEmail')">
@@ -123,11 +116,13 @@
                       </mat-form-field>
                   </div>
                   <div class="button-group">
-                    <button color="primary"
+                    <button class="home"
+                            color="primary"
                             *ngIf="isNext"
                             mat-raised-button
                             (click)="isNext = !isNext">上一步</button>
-                    <button color="accent"
+                    <button class="home"
+                            color="accent"
                             mat-raised-button
                             (click)="isNext ? onSignUpSubmit() : onNextStep()"
                             [disabled]="!isNext ? signUpForm.get('password').invalid || signUpForm.get('email').invalid : signUpForm.get('id').invalid || signUpForm.get('name').invalid || signUpForm.get('department').invalid || signUpForm.get('grade').invalid">

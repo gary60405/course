@@ -35,8 +35,8 @@ export class EditCourseComponent implements OnInit {
 
   ngOnInit() {
     this.backendService.getSiteList();
-    this.mainService.getCourseData('', '不拘');
-    this.mainService.getCollegeList();
+    this.mainService.getAllCourseData();
+    this.mainService.getCollegeData();
     this.courseForm = new FormGroup({
       college : new FormControl(),
       department : new FormControl(),
@@ -60,28 +60,34 @@ export class EditCourseComponent implements OnInit {
     this.mainService.getCollegeList();
   }
 
+  searchCourseInfoNumber(id: number) {
+    let i = this.mainService.CourseInfo.length;
+    while (i--) {
+      if (this.mainService.CourseInfo[i].id === id) {
+        return i;
+      }
+    }
+  }
+
   onSearch() {
     const formValue = this.courseForm.value;
     const level = formValue.department + formValue.level;
     const require = formValue.require;
-    this.mainService.getCourseData(level, require);
-    setTimeout(() => {
-      this.mainService.getCourseData(level, require);
-      this.courseInfo = this.mainService.CourseInfo;
-    }, 100);
+    this.courseInfo = this.mainService.getCourseData(level, require);
     this.editForm.reset();
   }
 
   onUpdate() {
-    if (this.mainService.CourseInfo[this.currentIndex] !== undefined) {
+    if (this.courseInfo[this.currentIndex] !== undefined) {
       this.snackBar.open('成功更新該筆課程資料!', '確認', {
         duration: 3000,
       });
       const obj = this.editForm.value;
-      obj.id = this.mainService.CourseInfo[this.currentIndex].id;
+      obj.id = this.courseInfo[this.currentIndex].id;
       this.courseInfo[this.currentIndex] = obj;
-      this.mainService.CourseInfo[this.currentIndex] = obj;
-      console.log(this.mainService.CourseInfo[this.currentIndex]);
+      const index = this.searchCourseInfoNumber(obj.id);
+      this.mainService.CourseInfo[index] = obj;
+      console.log(this.courseInfo[this.currentIndex], this.mainService.CourseInfo[index]);
       this.httpClient.patch(`https://garycourse.herokuapp.com/api/course/${obj.id}/`, this.editForm.value)
       .subscribe(
           res => console.log(res),
@@ -96,14 +102,15 @@ export class EditCourseComponent implements OnInit {
   }
 
   onDelete() {
-    if (this.mainService.CourseInfo[this.currentIndex] !== undefined) {
+    if (this.courseInfo[this.currentIndex] !== undefined) {
       this.snackBar.open('成功刪除該筆課程資料!', '確認', {
         duration: 3000,
       });
       const obj = this.editForm.value;
-      obj.id = this.mainService.CourseInfo[this.currentIndex].id;
+      obj.id = this.courseInfo[this.currentIndex].id;
       this.courseInfo.splice(this.currentIndex, 1);
-      this.mainService.CourseInfo.splice(this.currentIndex, 1);
+      const index = this.searchCourseInfoNumber(obj.id);
+      this.mainService.CourseInfo.splice(index, 1);
       this.httpClient.delete(`https://garycourse.herokuapp.com/api/course/${obj.id}/`, this.editForm.value)
       .subscribe(
           res => console.log(res),
@@ -118,7 +125,7 @@ export class EditCourseComponent implements OnInit {
   }
 
   onEdit(num: number) {
-    const course = this.mainService.CourseInfo[num];
+    const course = this.courseInfo[num];
     this.currentIndex = num;
     this.code = course.code;
     this.courseName = course.courseName;

@@ -7,14 +7,14 @@
                   <form class="d-flex flex-row justify-content-around align-content-between"
                       [formGroup]="courseForm">
                     <div class="form-position d-flex flex-row justify-content-around align-items-baseline align-content-between flex-nowrap">
-                      <mat-form-field>
+                      <mat-form-field class="main">
                           <mat-select formControlName="college" placeholder="學院" [(value)]="selected" (click)="onOpen()">
                             <mat-option *ngFor="let row of mainService.CollegeList" [value]="row.college">
                               {{row.college}}
                             </mat-option>
                           </mat-select>
                       </mat-form-field>
-                      <mat-form-field>
+                      <mat-form-field class="main">
                           <mat-select formControlName="department" placeholder="系所">
                             <div *ngFor="let rows of mainService.CollegeList;">
                               <div *ngIf="rows.college === selected">
@@ -25,7 +25,7 @@
                             </div>
                           </mat-select>
                       </mat-form-field>
-                      <mat-form-field>
+                      <mat-form-field class="main">
                           <mat-select formControlName="level" placeholder="年級">
                               <mat-option value="一">一年級</mat-option>
                               <mat-option value="二">二年級</mat-option>
@@ -33,7 +33,7 @@
                               <mat-option value="四">四年級</mat-option>
                           </mat-select>
                       </mat-form-field>
-                      <mat-form-field>
+                      <mat-form-field class="main">
                           <mat-select formControlName="require" placeholder="修別">
                             <mat-option value="不拘">不拘</mat-option>
                             <mat-option value="必修">必修</mat-option>

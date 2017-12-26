@@ -47,7 +47,7 @@ export class AddCourseComponent implements OnInit {
     this.currentIndex = 0;
     this.mainService.getAllCourseData();
     this.mainService.getCourseCode();
-    this.mainService.getCollegeList();
+    this.mainService.getCollegeData();
     this.backendService.getSiteList();
     this.firstFormGroup = new FormGroup({
       college: new FormControl('', [Validators.required, ]),
@@ -154,9 +154,13 @@ export class AddCourseComponent implements OnInit {
       hexNumber += 1;
     }
   }
-
+  getTeacherList() {
+    const department = this.firstFormGroup.value.department;
+    this.backendService.getTeacherList(department + '系');
+  }
   getCollegeInfo() {
     this.mainService.getCollegeList();
+    console.log(this.mainService.CollegeList);
   }
   districtValueChange() {
     this.districtSite = '';

@@ -86,11 +86,19 @@
                         </div>
                         <div class="col">
                           <mat-form-field>
-                            <input formControlName="teacherName"
+                              <mat-select formControlName="teacherName"
+                                          placeholder="授課教授"
+                                          [(value)]="teacherName"
+                                          (click)="getTeacherList()">
+                                <mat-option *ngFor="let row of backendService.teacherList" [value]="row">
+                                  {{row}}
+                                </mat-option>
+                              </mat-select>
+                            <!-- <input formControlName="teacherName"
                                    [(ngModel)]="teacherName"
                                    matInput
                                    placeholder="授課教授"
-                                   required>
+                                   required> -->
                             <mat-error *ngIf="secondFormGroup.get('teacherName').hasError('required')">*必填項目</mat-error>
                           </mat-form-field>
                         </div>

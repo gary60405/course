@@ -5,7 +5,6 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { MainService } from './main.service';
 import { FormGroup, FormControl} from '@angular/forms';
-import { setTimeout } from 'timers';
 
 @Component({
   selector: 'app-dialog-data',
@@ -45,8 +44,8 @@ export class MainComponent implements OnInit, AfterViewInit {
   courseForm: FormGroup;
 
   ngOnInit() {
-    this.mainService.getCourseData('', '不拘');
-    this.mainService.getCollegeList();
+    this.mainService.getAllCourseData();
+    this.mainService.getCollegeData();
     this.mainService.dialogDisplaySubject
       .subscribe(() => {
         this.getRowData();
@@ -71,14 +70,9 @@ export class MainComponent implements OnInit, AfterViewInit {
     const formValue = this.courseForm.value;
     const level = formValue.department + formValue.level;
     const require = formValue.require;
-    this.mainService.getCourseData(level, require);
-    setTimeout(() => {
-      this.mainService.getCourseData(level, require);
-      console.log(this.mainService.CourseInfo);
-      this.ELEMENT_DATA = this.mainService.CourseInfo;
-      this.dataSource = new MatTableDataSource<Element>(this.ELEMENT_DATA);
-      this.dataSource.paginator = this.paginator;
-    }, 100);
+    this.ELEMENT_DATA = this.mainService.getCourseData(level, require);
+    this.dataSource = new MatTableDataSource<Element>(this.ELEMENT_DATA);
+    this.dataSource.paginator = this.paginator;
   }
 
   openDialog(index: number): void {

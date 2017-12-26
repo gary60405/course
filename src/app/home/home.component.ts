@@ -7,6 +7,7 @@ import { MainService } from './../frontend/choose/main/main.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,8 @@ export class HomeComponent implements OnInit {
               public mainService: MainService,
               public coreService: CoreService,
               public afAuth: AngularFireAuth,
-              public httpClient: HttpClient) { }
+              public httpClient: HttpClient,
+              private router: Router) { }
   isNext = false;
   currentTabIndex = 0;
   hideForSignIn = true;
@@ -33,7 +35,7 @@ export class HomeComponent implements OnInit {
   signUpForm: FormGroup;
 
   ngOnInit() {
-    this.mainService.getCollegeList();
+    this.mainService.getCollegeData();
     this.coreService.getStudentData();
     this.signInForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -52,12 +54,27 @@ export class HomeComponent implements OnInit {
   onSignInSubmit() {
     const email = this.signInForm.value.email;
     const password = this.signInForm.value.password;
-    this.afAuth.auth.signInWithEmailAndPassword(email, password).catch(err => console.log(err));
-    const user = this.afAuth.auth.currentUser;
-    console.log(user);
-    this.signInForm.reset();
-    this.signInForm.disable();
-    setTimeout(() => this.signInForm.enable(), 1000);
+    this.afAuth.auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        this.openSnackBar('登入成功', 3000);
+        this.coreService.userInfo = this.afAuth.auth.currentUser;
+        this.signInForm.reset();
+        if (this.coreService.userInfo['displayName'] === 'admin') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/users']);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        if (err.code === 'auth/invalid-email') {
+          this.openSnackBar('請輸入正確email格式', 3000);
+        } else if (err.code === 'auth/wrong-password') {
+          this.openSnackBar('密碼錯誤', 3000);
+        } else if (err.code === 'auth/user-not-found') {
+          this.openSnackBar('無此使用者', 3000);
+        }
+      });
   }
 
   onNextStep() {
@@ -66,10 +83,18 @@ export class HomeComponent implements OnInit {
   }
 
   onSignUpSubmit() {
-    const formValue = this.signUpForm.value;
-    const email = formValue.email;
-    const password = formValue.password;
-    this.afAuth.auth.createUserWithEmailAndPassword(email, password).catch(err => console.log(err));
+    const sendObject = {};
+    sendObject['account'] = this.signUpForm.value.email;
+    sendObject['password'] = this.signUpForm.value.password;
+    sendObject['studentName'] = this.signUpForm.value.name;
+    sendObject['studentID'] = this.signUpForm.value.id;
+    sendObject['classLevel'] = this.signUpForm.value.department + this.signUpForm.value.grade;
+    this.afAuth.auth.createUserWithEmailAndPassword(sendObject['account'], sendObject['password']).catch(err => console.log(err));
+    this.httpClient.post('https://garycourse.herokuapp.com/api/student/', sendObject)
+      .subscribe(
+        res => console.log(res),
+        err => console.log(err)
+      );
     this.openSnackBar();
     this.isNext = false;
     this.signUpForm.reset();
@@ -88,6 +113,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
+
+
   checkEmailValidator(control: FormControl) {
     this.coreService.getStudentData();
     const emailList = this.coreService.studentDataList.map(item => item = item.account);
@@ -99,10 +126,10 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  openSnackBar() {
+  openSnackBar(text = '註冊成功!', sec = 1000) {
     this.currentTabIndex = 0;
-    this.snackBar.open('註冊成功!', '收回', {
-      duration: 1000,
+    this.snackBar.open(text, '收回', {
+      duration: sec,
     });
   }
 }

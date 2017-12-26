@@ -16,34 +16,17 @@ export class MainService {
   dialogDisplaySubject = new Subject();
 
   getCourseCode() {
-    this.httpClient.get<any>('https://garycourse.herokuapp.com/api/course/')
-    .map((courseList) => {
-      let i = courseList.length;
-      while (i--) {
-        courseList[i] =  courseList[i].code;
-      }
-      return courseList;
-    })
-    .subscribe((data) => {
-      this.codeList = data;
-    });
+    this.codeList = this.CourseInfo.map(course => course = course.code);
   }
 
   getCourseData(level, require) {
-    this.httpClient.get<Course[]>('https://garycourse.herokuapp.com/api/course/')
-      .map((courseList: Course[]) => {
-        if (require === '不拘') {
-          courseList = courseList.filter(course => course.level === level);
-          return courseList;
-        } else {
-          courseList = courseList.filter(course => course.level === level && course.require === require);
-          return courseList;
-        }
-      })
-      .subscribe((data) => {
-        this.CourseInfo = data;
-        return data;
-      });
+    return this.CourseInfo.filter((course: Course) => {
+      if (require === '不拘') {
+        return course.level === level;
+      } else {
+        return course.level === level && course.require === require;
+      }
+    });
   }
 
   getAllCourseData() {
@@ -56,9 +39,7 @@ export class MainService {
         return data;
       });
   }
-
-  getCollegeList() {
-    this.CollegeList = [];
+  getCollegeData() {
     this.httpClient.get('https://garycourse.herokuapp.com/api/college/')
       .map((rows: any[]) => {
        let i = rows.length;
@@ -70,7 +51,6 @@ export class MainService {
       .subscribe((data) => {
         this.collegeList = data;
       });
-
     this.httpClient.get('https://garycourse.herokuapp.com/api/department/')
       .map((rows: any[]) => {
         let i = rows.length;
@@ -83,6 +63,33 @@ export class MainService {
       .subscribe((data) => {
         this.departmentList = data;
       });
+  }
+  getCollegeList() {
+    this.CollegeList = [];
+    // this.httpClient.get('https://garycourse.herokuapp.com/api/college/')
+    //   .map((rows: any[]) => {
+    //    let i = rows.length;
+    //    while (i--) {
+    //     rows[i] = rows[i].college;
+    //    }
+    //     return rows;
+    //   })
+    //   .subscribe((data) => {
+    //     this.collegeList = data;
+    //   });
+
+    // this.httpClient.get('https://garycourse.herokuapp.com/api/department/')
+    //   .map((rows: any[]) => {
+    //     let i = rows.length;
+    //     while (i--) {
+    //       delete rows[i].id;
+    //       rows[i].college = this.collegeList[rows[i].college - 1];
+    //     }
+    //     return rows.reverse();
+    //   })
+    //   .subscribe((data) => {
+    //     this.departmentList = data;
+    //   });
 
       let j = this.collegeList.length;
       while (j--) {

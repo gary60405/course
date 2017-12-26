@@ -23,15 +23,10 @@
   width: 50%;
 }
 
-h6 {
-  font-weight: 900 !important;
-  color: #666;
-  font-size: 1.1rem;
-  transform: translate(-70%, 30%);
-}
 .select-width {
   width: 50% !important;
 }
+
 .select-group {
   width: 100%;
   display: flex;
@@ -46,7 +41,7 @@ h6 {
   width:50%;
 }
 
-button {
+button.home {
   width: 90px;
   min-height: 40px;
   font-size: 20px !important;
