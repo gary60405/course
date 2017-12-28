@@ -3,7 +3,7 @@
   height: 150px;
 }
 
-td {
+td.course-table {
   min-width: 100px;
   max-width: 100px;
 }

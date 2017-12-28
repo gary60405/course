@@ -1,4 +1,7 @@
+import { CoreService } from './../../../core/core.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AuthService } from '../../../auth/auth.service';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-side-info',
@@ -8,9 +11,12 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class SideInfoComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private authService: AuthService,
+              private afAuth: AngularFireAuth) { }
+  user = {};
   ngOnInit() {
+    this.authService.getUserInfo(this.afAuth.auth.currentUser.email);
+    this.user = this.authService.userInfo;
   }
 
 }

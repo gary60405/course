@@ -21,7 +21,8 @@
                         <th class="shrink" rowspan="5">上午</th>
                         <th class="shrink">第一節</th>
                         <th class="shrink">07:10<br>｜<br>08:00</th>
-                        <td [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
+                        <td class="course-table"
+                            [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
                             *ngFor="let item of course[0]">
                           <p>{{item == '*' ? '' : item.courseName}}</p>
                           <p>{{item == '*' ? '*' : item.teacherName}}</p>
@@ -31,7 +32,8 @@
                     <tr>
                         <th class="shrink">第二節</th>
                         <th class="shrink">08:00<br>｜<br>08:50</th>
-                        <td [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
+                        <td class="course-table"
+                            [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
                             *ngFor="let item of course[1]">
                           <p>{{item == '*' ? '' : item.courseName}}</p>
                           <p>{{item == '*' ? '*' : item.teacherName}}</p>
@@ -41,7 +43,8 @@
                     <tr>
                         <th class="shrink">第三節</th>
                         <th class="shrink">09:00<br>｜<br>09:50</th>
-                        <td [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
+                        <td class="course-table"
+                            [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
                             *ngFor="let item of course[2]">
                           <p>{{item == '*' ? '' : item.courseName}}</p>
                           <p>{{item == '*' ? '*' : item.teacherName}}</p>
@@ -51,7 +54,8 @@
                     <tr>
                         <th class="shrink">第四節</th>
                         <th class="shrink">10:00<br>｜<br>10:50</th>
-                        <td [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
+                        <td class="course-table"
+                            [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
                             *ngFor="let item of course[3]">
                           <p>{{item == '*' ? '' : item.courseName}}</p>
                           <p>{{item == '*' ? '*' : item.teacherName}}</p>
@@ -61,7 +65,8 @@
                     <tr>
                         <th class="shrink">第五節</th>
                         <th class="shrink">11:00<br>｜<br>11:50</th>
-                        <td [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
+                        <td class="course-table"
+                            [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
                             *ngFor="let item of course[4]">
                           <p>{{item == '*' ? '' : item.courseName}}</p>
                           <p>{{item == '*' ? '*' : item.teacherName}}</p>
@@ -72,7 +77,8 @@
                         <th class="shrink" rowspan="5">下午</th>
                         <th class="shrink">第六節</th>
                         <th class="shrink">12:00<br>｜<br>12:50</th>
-                        <td [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
+                        <td class="course-table"
+                            [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
                             *ngFor="let item of course[5]">
                           <p>{{item == '*' ? '' : item.courseName}}</p>
                           <p>{{item == '*' ? '*' : item.teacherName}}</p>
@@ -82,7 +88,8 @@
                     <tr>
                         <th class="shrink">第七節</th>
                         <th class="shrink">13:00<br>｜<br>13:50</th>
-                        <td [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
+                        <td class="course-table"
+                            [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
                             *ngFor="let item of course[6]">
                           <p>{{item == '*' ? '' : item.courseName}}</p>
                           <p>{{item == '*' ? '*' : item.teacherName}}</p>
@@ -92,7 +99,8 @@
                     <tr>
                         <th class="shrink">第八節</th>
                         <th class="shrink">14:00<br>｜<br>14:50</th>
-                        <td [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
+                        <td class="course-table"
+                            [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
                             *ngFor="let item of course[7]">
                           <p>{{item == '*' ? '' : item.courseName}}</p>
                           <p>{{item == '*' ? '*' : item.teacherName}}</p>
@@ -102,7 +110,8 @@
                     <tr>
                         <th class="shrink">第九節</th>
                         <th class="shrink">15:00<br>｜<br>15:50</th>
-                        <td [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
+                        <td class="course-table"
+                            [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
                             *ngFor="let item of course[8]">
                           <p>{{item == '*' ? '' : item.courseName}}</p>
                           <p>{{item == '*' ? '*' : item.teacherName}}</p>
@@ -112,7 +121,8 @@
                     <tr>
                         <th class="shrink">第十節</th>
                         <th class="shrink">16:00<br>｜<br>16:50</th>
-                        <td [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
+                        <td class="course-table"
+                            [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
                             *ngFor="let item of course[9]">
                           <p>{{item == '*' ? '' : item.courseName}}</p>
                           <p>{{item == '*' ? '*' : item.teacherName}}</p>
@@ -123,7 +133,8 @@
                         <th class="shrink" rowspan="6">晚上</th>
                         <th class="shrink">第十一節</th>
                         <th class="shrink">17:00<br>｜<br>17:50</th>
-                        <td [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
+                        <td class="course-table"
+                            [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
                             *ngFor="let item of course[10]">
                           <p>{{item == '*' ? '' : item.courseName}}</p>
                           <p>{{item == '*' ? '*' : item.teacherName}}</p>
@@ -133,7 +144,8 @@
                     <tr>
                         <th class="shrink">第十二節</th>
                         <th class="shrink">18:30<br>｜<br>19:20</th>
-                        <td [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
+                        <td class="course-table"
+                            [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
                             *ngFor="let item of course[11]">
                           <p>{{item == '*' ? '' : item.courseName}}</p>
                           <p>{{item == '*' ? '*' : item.teacherName}}</p>
@@ -143,7 +155,8 @@
                     <tr>
                         <th class="shrink">第十三節</th>
                         <th class="shrink">19:20<br>｜<br>20:10</th>
-                        <td [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
+                        <td class="course-table"
+                            [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
                             *ngFor="let item of course[12]">
                           <p>{{item == '*' ? '' : item.courseName}}</p>
                           <p>{{item == '*' ? '*' : item.teacherName}}</p>
@@ -153,7 +166,8 @@
                     <tr>
                         <th class="shrink">第十四節</th>
                         <th class="shrink">20:10<br>｜<br>21:00</th>
-                        <td [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
+                        <td class="course-table"
+                            [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
                             *ngFor="let item of course[13]">
                           <p>{{item == '*' ? '' : item.courseName}}</p>
                           <p>{{item == '*' ? '*' : item.teacherName}}</p>
@@ -163,7 +177,8 @@
                     <tr>
                         <th class="shrink">第十五節</th>
                         <th class="shrink">21:00<br>｜<br>21:50</th>
-                        <td [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
+                        <td class="course-table"
+                            [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
                             *ngFor="let item of course[14]">
                           <p>{{item == '*' ? '' : item.courseName}}</p>
                           <p>{{item == '*' ? '*' : item.teacherName}}</p>
@@ -173,7 +188,8 @@
                     <tr>
                         <th class="shrink">第十六節</th>
                         <th class="shrink">21:50<br>｜<br>22:40</th>
-                        <td [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
+                        <td class="course-table"
+                            [ngStyle]="{'background-color': item == '*' ? '#fff' : 'rgba(255,64,76,0.2)'}"
                             *ngFor="let item of course[15]">
                           <p>{{item == '*' ? '' : item.courseName}}</p>
                           <p>{{item == '*' ? '*' : item.teacherName}}</p>

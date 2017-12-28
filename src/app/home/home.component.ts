@@ -8,6 +8,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,7 @@ export class HomeComponent implements OnInit {
   constructor(public snackBar: MatSnackBar,
               public mainService: MainService,
               public coreService: CoreService,
+              public authService: AuthService,
               public afAuth: AngularFireAuth,
               public httpClient: HttpClient,
               private router: Router) { }
@@ -57,9 +59,10 @@ export class HomeComponent implements OnInit {
     this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(() => {
         this.openSnackBar('登入成功', 3000);
-        this.coreService.userInfo = this.afAuth.auth.currentUser;
+        this.authService.getUserInfo(this.afAuth.auth.currentUser.email);
+        this.authService.authSubject.next();
         this.signInForm.reset();
-        if (this.coreService.userInfo['displayName'] === 'admin') {
+        if (this.afAuth.auth.currentUser.displayName === 'admin') {
           this.router.navigate(['/admin']);
         } else {
           this.router.navigate(['/users']);
@@ -112,8 +115,6 @@ export class HomeComponent implements OnInit {
       return null;
     }
   }
-
-
 
   checkEmailValidator(control: FormControl) {
     this.coreService.getStudentData();

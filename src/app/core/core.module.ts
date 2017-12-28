@@ -9,6 +9,8 @@ import { FrameworkModule } from './framework.module';
 import { BackendService } from '../backend/share/backend.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../auth/auth.service';
+import { AuthGuardService } from '../auth/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { CommonModule } from '@angular/common';
     CollegeService,
     MainService,
     CoreService,
-    BackendService
+    BackendService,
+    AuthService,
+    AuthGuardService
   ],
 })
 export class CoreModule {}
