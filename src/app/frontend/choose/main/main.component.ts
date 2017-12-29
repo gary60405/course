@@ -43,7 +43,7 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   selected: string;
   index: number;
   message = '';
-  displayedColumns = ['', 'code', 'name', 'time', 'site', 'teacher'];
+  displayedColumns = ['', 'code', 'name', 'date', 'time', 'site', 'teacher'];
   ELEMENT_DATA: Element[];
   dataSource = new MatTableDataSource<Element>(this.ELEMENT_DATA);
   courseForm: FormGroup;

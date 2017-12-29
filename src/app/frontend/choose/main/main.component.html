@@ -73,6 +73,11 @@
           <mat-cell  *matCellDef="let element;"> {{element.courseName}} </mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="date">
+          <mat-header-cell *matHeaderCellDef> 上課星期 </mat-header-cell>
+          <mat-cell  *matCellDef="let element;"> {{element.date}} </mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="time">
           <mat-header-cell *matHeaderCellDef> 上課時段 </mat-header-cell>
           <mat-cell  *matCellDef="let element;"> {{element.time}} </mat-cell>
