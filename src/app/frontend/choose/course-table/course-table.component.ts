@@ -1,5 +1,6 @@
 import { CollegeService } from './../college.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-course-table',
@@ -9,12 +10,14 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class CourseTableComponent implements OnInit {
 
-  constructor(private collegeService: CollegeService) { }
+  constructor(private collegeService: CollegeService,
+              private authService: AuthService) { }
   date = new Date();
   year: number;
   semester: number;
   course: any = [];
   ngOnInit() {
+    this.collegeService.convertCourseCode(this.authService.userInfo['courseCode']);
     this.year = this.date.getFullYear() - 1911;
     this.semester = 6 < (this.date.getMonth() + 1) ? 1 : 2;
     let i = 16;

@@ -1,13 +1,17 @@
+import { CoreService } from './../../../core/core.service';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Data, Course } from './../../../core/main.models';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
+import { AuthService } from '../../../auth/auth.service';
 
 @Injectable()
 export class MainService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+              private authService: AuthService,
+              private coreService: CoreService) { }
   public CourseInfo = [];
   public codeList = [];
   public CollegeList: Data[]= [];
@@ -66,31 +70,6 @@ export class MainService {
   }
   getCollegeList() {
     this.CollegeList = [];
-    // this.httpClient.get('https://garycourse.herokuapp.com/api/college/')
-    //   .map((rows: any[]) => {
-    //    let i = rows.length;
-    //    while (i--) {
-    //     rows[i] = rows[i].college;
-    //    }
-    //     return rows;
-    //   })
-    //   .subscribe((data) => {
-    //     this.collegeList = data;
-    //   });
-
-    // this.httpClient.get('https://garycourse.herokuapp.com/api/department/')
-    //   .map((rows: any[]) => {
-    //     let i = rows.length;
-    //     while (i--) {
-    //       delete rows[i].id;
-    //       rows[i].college = this.collegeList[rows[i].college - 1];
-    //     }
-    //     return rows.reverse();
-    //   })
-    //   .subscribe((data) => {
-    //     this.departmentList = data;
-    //   });
-
       let j = this.collegeList.length;
       while (j--) {
         const data = {college: '', dep: []};
@@ -107,6 +86,16 @@ export class MainService {
         this.CollegeList.push(data);
       }
       this.CollegeList = this.CollegeList.reverse();
+  }
+
+  appendCourse(code: string) {
+    const course = {};
+    const id = this.authService.userInfo['id'];
+    let items = this.authService.userInfo['courseCode'];
+    items === '' ? items = code : items += `,${code}`;
+    course['courseCode'] = items;
+    this.authService.userInfo['courseCode'] = items;
+    this.coreService.updateCourse(id, course);
   }
 
 }

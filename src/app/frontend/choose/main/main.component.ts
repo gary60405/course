@@ -1,10 +1,13 @@
+import { HttpClient } from '@angular/common/http';
 import { CoreService } from './../../../core/core.service';
 import { CollegeService } from './../college.service';
-import { EventEmitter, Input, Component, OnInit, ElementRef, ViewEncapsulation, ViewChild, AfterViewInit, Inject } from '@angular/core';
+import { Input, Component, OnInit, OnDestroy, ElementRef, ViewEncapsulation, ViewChild, AfterViewInit, Inject } from '@angular/core';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { MainService } from './main.service';
 import { FormGroup, FormControl} from '@angular/forms';
+import { AuthService } from '../../../auth/auth.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-dialog-data',
@@ -24,12 +27,14 @@ export class DialogDataComponent {
   styleUrls: ['./main.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class MainComponent implements OnInit, AfterViewInit {
+export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(public collegeService: CollegeService,
               public coreService: CoreService,
               public mainService: MainService,
+              private authService: AuthService,
+              private httpClient: HttpClient,
               public dialog: MatDialog,
               public el: ElementRef) {}
 
@@ -42,11 +47,12 @@ export class MainComponent implements OnInit, AfterViewInit {
   ELEMENT_DATA: Element[];
   dataSource = new MatTableDataSource<Element>(this.ELEMENT_DATA);
   courseForm: FormGroup;
-
+  dialogSubscription: Subscription;
   ngOnInit() {
     this.mainService.getAllCourseData();
     this.mainService.getCollegeData();
-    this.mainService.dialogDisplaySubject
+    this.coreService.getStudentData();
+    this.dialogSubscription = this.mainService.dialogDisplaySubject
       .subscribe(() => {
         this.getRowData();
       });
@@ -93,7 +99,8 @@ export class MainComponent implements OnInit, AfterViewInit {
     if (this.checkConflict(row)) {
       this.isSelectSuccess = true;
       this.displayAlert();
-      this.collegeService.selectedCourse.push(row);
+      this.mainService.appendCourse(code);
+      this.collegeService.convertCourseCode(this.authService.userInfo['courseCode']);
     } else {
       this.isSelectSuccess = false;
       this.displayAlert();
@@ -140,7 +147,12 @@ export class MainComponent implements OnInit, AfterViewInit {
       this.isDialogDisplay = false;
     }, 5000);
   }
+
+  ngOnDestroy() {
+    this.dialogSubscription.unsubscribe();
+  }
 }
+
 
 export interface Element {
   code: string;

@@ -17,6 +17,14 @@ export class CoreService {
   });
  }
 
+ updateCourse(id, course) {
+  this.httpClient.patch(`https://garycourse.herokuapp.com/api/student/${id}/`, course)
+    .subscribe(
+      res => console.log(res),
+      err => console.log(err)
+    );
+ }
+
 
 
 }

@@ -3,6 +3,8 @@ import { CoreService } from './../core/core.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Subscription } from 'rxjs/Subscription';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-header',
@@ -10,16 +12,17 @@ import { AngularFireAuth } from 'angularfire2/auth';
   styleUrls: ['./header.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(public authService: AuthService,
               public afAuth: AngularFireAuth,
               public coreService: CoreService,
               private router: Router) { }
+  authsubscription: Subscription;
   user = {};
   isLogin = false;
   ngOnInit() {
-    this.authService.authSubject
+    this.authsubscription = this.authService.authSubject
       .subscribe(() => {
         this.authService.getUserInfo(this.afAuth.auth.currentUser.email);
         this.user = this.authService.userInfo['studentName'];
@@ -31,6 +34,10 @@ export class HeaderComponent implements OnInit {
     this.authService.logout();
     this.isLogin = this.authService.isLogin;
     this.router.navigate(['/']);
+  }
+
+  ngOnDestroy() {
+    this.authsubscription.unsubscribe();
   }
 
 }

@@ -10,7 +10,7 @@ import { BackendService } from '../backend/share/backend.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
-import { AuthGuardService } from '../auth/auth-guard.service';
+import { AuthGuard } from '../auth/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,7 @@ import { AuthGuardService } from '../auth/auth-guard.service';
     CoreService,
     BackendService,
     AuthService,
-    AuthGuardService
+    AuthGuard
   ],
 })
 export class CoreModule {}
