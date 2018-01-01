@@ -10,11 +10,15 @@ export class CoreService {
 
   public studentDataList = [];
 
- getStudentData() {
+ getAllStudentData() {
   this.httpClient.get<StudentData[]>('https://garycourse.herokuapp.com/api/student/')
   .subscribe(list => {
     this.studentDataList = list;
   });
+ }
+
+ getStudentData(studentID) {
+   return this.studentDataList.find(data => data.studentID === studentID);
  }
 
  updateCourse(id, course) {

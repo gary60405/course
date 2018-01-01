@@ -2,6 +2,8 @@ import { CoreService } from './../../../core/core.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CollegeService } from '../college.service';
 import { AuthService } from '../../../auth/auth.service';
+import { Subscription } from 'rxjs/Subscription';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-course-list',
@@ -9,7 +11,7 @@ import { AuthService } from '../../../auth/auth.service';
   styleUrls: ['./course-list.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class CourseListComponent implements OnInit {
+export class CourseListComponent implements OnInit, OnDestroy {
 
   constructor(public collegeService: CollegeService,
               private authService: AuthService,
@@ -17,8 +19,9 @@ export class CourseListComponent implements OnInit {
 
   score = 0;
   selectedCourse = [];
+  selectedSubscription: Subscription;
   ngOnInit() {
-    this.collegeService.selectedSubject
+   this.selectedSubscription = this.collegeService.selectedSubject
       .subscribe(() => this.selectedCourse = this.collegeService.selectedCourse);
     this.collegeService.convertCourseCode(this.authService.userInfo['courseCode']);
     this.collegeService.selectedSubject.next();
@@ -49,6 +52,15 @@ export class CourseListComponent implements OnInit {
     this.authService.userInfo['courseCode'] = codeString.slice(0, -1);
     this.collegeService.convertCourseCode(codeString);
     this.coreService.updateCourse(id, course);
+    const unrollData = this.collegeService.UnrollData.find(data => data.code === code);
+    console.log(this.collegeService.UnrollData , unrollData);
+    if (unrollData !== undefined) {
+      this.collegeService.deleteUnrollData(unrollData.id);
+    }
+  }
+
+  ngOnDestroy() {
+    this.selectedSubscription.unsubscribe();
   }
 
 }

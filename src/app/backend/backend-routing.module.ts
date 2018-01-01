@@ -1,3 +1,4 @@
+import { TeacherInfoComponent } from './teacher-info/teacher-info.component';
 import { AddCourseComponent } from './add-course/add-course.component';
 import { BackendComponent } from './backend.component';
 
@@ -12,9 +13,10 @@ import { EditCourseComponent } from './edit-course/edit-course.component';
 const frontEndRoutes: Routes = [
   { path: '', component: BackendComponent, children: [
     { path: '', redirectTo: 'addCourse', pathMatch: 'full'},
-    { path: 'addCourse', component: AddCourseComponent},
+    { path: 'addCourse', component: AddCourseComponent },
     { path: 'approval', component: ApprovalComponent },
     { path: 'editCourse', component: EditCourseComponent },
+    { path: 'teacherInfo', component: TeacherInfoComponent }
   ]},
 ];
 

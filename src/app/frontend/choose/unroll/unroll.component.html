@@ -20,8 +20,13 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let item of this.collegeService.selectedCourse">
-                            <th scope="row"><button mat-raised-button color="accent">退選</button></th>
+                          <tr *ngFor="let item of this.collegeService.selectedCourse; let i = index">
+                            <th scope="row"><button id="btn_{{i}}"
+                                                    class="{{item.btnColor}}"
+                                                    disabled="{{item.isDisabled}}"
+                                                    mat-raised-button
+                                                    color="accent"
+                                                    (click)="unroll(i)">{{item.btnText}}</button></th>
                             <td>{{item.level}}</td>
                             <td>{{item.code}}</td>
                             <td>{{item.courseName}}</td>

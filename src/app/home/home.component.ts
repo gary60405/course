@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.mainService.getCollegeData();
-    this.coreService.getStudentData();
+    this.coreService.getAllStudentData();
     this.signInForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required])
@@ -106,7 +106,7 @@ export class HomeComponent implements OnInit {
   }
 
   checkStudentIDValidator(control: FormControl) {
-    this.coreService.getStudentData();
+    this.coreService.getAllStudentData();
     const studentIDList = this.coreService.studentDataList.map(item => item = item.studentID);
     const isFind = studentIDList.find(item => item === control.value);
     if (isFind !== undefined) {
@@ -117,7 +117,7 @@ export class HomeComponent implements OnInit {
   }
 
   checkEmailValidator(control: FormControl) {
-    this.coreService.getStudentData();
+    this.coreService.getAllStudentData();
     const emailList = this.coreService.studentDataList.map(item => item = item.account);
     const isFind = emailList.find(item => item === control.value);
     if (isFind !== undefined) {

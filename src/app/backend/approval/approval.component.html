@@ -1,3 +1,92 @@
-<p>
-  approval works!
-</p>
+<div class="container-fluid">
+  <div class="row">
+      <mat-card class="mt-3 w-100 p-0">
+          <div class="list-group w-100 text-center">
+              <div class="bg-danger text-white card-header text-center font-weight-bold">退選審核</div>
+              <div class="card-body card-padding">
+                  <form class="d-flex flex-row justify-content-around align-content-between"
+                      [formGroup]="unrollForm">
+                    <div class="form-position d-flex flex-row justify-content-around align-items-baseline align-content-between flex-nowrap">
+                      <mat-form-field class="setWidth">
+                          <mat-select formControlName="college" placeholder="學院" [(value)]="selected" (click)="onOpen()">
+                            <mat-option *ngFor="let row of mainService.CollegeList" [value]="row.college">
+                              {{row.college}}
+                            </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                      <mat-form-field class="setWidth">
+                          <mat-select formControlName="department" placeholder="系所">
+                            <div *ngFor="let rows of mainService.CollegeList;">
+                              <div *ngIf="rows.college === selected">
+                                  <mat-option  *ngFor="let row of rows.dep" [value]="row.sim_department">
+                                      {{row.department}}
+                                    </mat-option>
+                              </div>
+                            </div>
+                          </mat-select>
+                      </mat-form-field>
+                      <mat-form-field class="setWidth">
+                          <mat-select formControlName="level" placeholder="年級">
+                              <mat-option value="一">一年級</mat-option>
+                              <mat-option value="二">二年級</mat-option>
+                              <mat-option value="三">三年級</mat-option>
+                              <mat-option value="四">四年級</mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                      <button mat-raised-button
+                              class="ml-2"
+                              color="warn"
+                              (click)="onSearch()">查詢</button>
+                  </div>
+                </form>
+              </div>
+          </div>
+      </mat-card>
+  </div>
+  <div class="row">
+      <mat-card class="mt-3 w-100 p-0">
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let item of userInfo">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{item.classLevel + '－' + item.studentName + '(' + item.studentID + ')'}}
+              </mat-panel-title>
+              <mat-panel-description>
+                共{{item.dataLength}}筆申請待審核
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col">開課班級</th>
+                    <th scope="col">選課代碼</th>
+                    <th scope="col">課程名稱</th>
+                    <th scope="col">授課教師</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of item.applyData">
+                    <th scope="row">
+                        <button mat-raised-button
+                                class="bg-success text-white mr-3"
+                                (click)="replyApproval(data.id, '核准')">核准</button>
+                    </th>
+                    <th>
+                        <button mat-raised-button
+                                class="bg-warning text-white mr-3"
+                                (click)="replyApproval(data.id, '不核准')">不核准</button>
+                    </th>
+                    <td>{{data.level}}</td>
+                    <td>{{data.code}}</td>
+                    <td>{{data.courseName}}</td>
+                    <td>{{data.teacherName}}</td>
+                  </tr>
+                </tbody>
+              </table>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </mat-card>
+  </div>
+</div>

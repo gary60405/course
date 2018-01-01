@@ -1,0 +1,11 @@
+mat-form-field.setWidth {
+  width: 20% !important;
+}
+.form-position {
+  width:85%;
+}
+
+.card-padding {
+  padding-top: 20px;
+  padding-bottom: 5px;
+}

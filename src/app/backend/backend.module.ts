@@ -9,6 +9,7 @@ import { ApprovalComponent } from './../backend/approval/approval.component';
 import { AddCourseComponent } from './../backend/add-course/add-course.component';
 import { EditCourseComponent } from './../backend/edit-course/edit-course.component';
 import { AdminPanelComponent } from './../backend/admin-panel/admin-panel.component';
+import { TeacherInfoComponent } from './teacher-info/teacher-info.component';
 
 
 
@@ -19,6 +20,7 @@ import { AdminPanelComponent } from './../backend/admin-panel/admin-panel.compon
     ApprovalComponent,
     EditCourseComponent,
     AdminPanelComponent,
+    TeacherInfoComponent,
   ],
   imports: [
     FormsModule,

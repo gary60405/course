@@ -51,7 +51,8 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.mainService.getAllCourseData();
     this.mainService.getCollegeData();
-    this.coreService.getStudentData();
+    this.coreService.getAllStudentData();
+    this.collegeService.getUnrollData();
     this.dialogSubscription = this.mainService.dialogDisplaySubject
       .subscribe(() => {
         this.getRowData();

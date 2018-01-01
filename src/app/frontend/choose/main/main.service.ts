@@ -23,6 +23,10 @@ export class MainService {
     this.codeList = this.CourseInfo.map(course => course = course.code);
   }
 
+  searchCourseData(code) {
+    return this.CourseInfo.find(item => item.code === code);
+  }
+
   getCourseData(level, require) {
     return this.CourseInfo.filter((course: Course) => {
       if (require === '不拘') {

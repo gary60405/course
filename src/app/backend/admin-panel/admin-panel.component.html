@@ -1,20 +1,26 @@
 <div class="container-fluid">
-  <div class="mt-3 row">
+  <div class="mt-2 row">
       <mat-card class="card-size">
           <div class="list-group w-100 text-center">
               <div class="bg-danger text-white card-header text-center font-weight-bold">後台操作</div>
               <button routerLink="/admin/addCourse" routerLinkActive="active" type="button" class="list-group-item list-group-item-light">新增課程</button>
               <button routerLink="/admin/editCourse" routerLinkActive="active" type="button" class="list-group-item list-group-item-light">編輯課程</button>
-              <button routerLink="/admin/approval" routerLinkActive="active" type="button" class="list-group-item list-group-item-light">簽核系統</button>
-              <button routerLink="/none" routerLinkActive="active" type="button" class="list-group-item list-group-item-light">教師資訊</button>
+              <button routerLink="/admin/approval" routerLinkActive="active" type="button" class="list-group-item list-group-item-light">退選審核</button>
+              <!-- <button routerLink="/admin/teacherInfo" routerLinkActive="active" type="button" class="list-group-item list-group-item-light">教師資訊</button> -->
           </div>
       </mat-card>
       <mat-card class="card-size">
           <div class="list-group w-100 text-center">
             <div class="bg-danger text-white card-header text-center font-weight-bold">常用連結</div>
-            <button type="button" class="list-group-item list-group-item-light">課程地圖</button>
-            <button type="button" class="list-group-item list-group-item-light">學生系統</button>
-            <button type="button" class="list-group-item list-group-item-light">課程大綱</button>
+            <button type="button"
+                    class="list-group-item list-group-item-light"
+                    (click)="onNavigate('academics.nutn.edu.tw/course_map/')">課程地圖</button>
+            <button type="button"
+                    class="list-group-item list-group-item-light"
+                    (click)="onNavigate('academics.nutn.edu.tw/iSTU/')">學生系統</button>
+            <button type="button"
+                    class="list-group-item list-group-item-light"
+                    (click)="onNavigate('ecourse.nutn.edu.tw/public/tea_preview_list.aspx')">課程大綱</button>
           </div>
       </mat-card>
       <mat-card class="card-size">
