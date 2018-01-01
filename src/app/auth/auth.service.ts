@@ -12,7 +12,7 @@ export class AuthService {
               private afAuth: AngularFireAuth) { }
 
   getUserInfo(user: string) {
-    this.coreService.getStudentData();
+    this.coreService.getAllStudentData();
     this.coreService.studentDataList.forEach(row => {
       if (row.account === user) {
        this.userInfo = row;
