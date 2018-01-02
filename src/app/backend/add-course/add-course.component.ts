@@ -180,7 +180,7 @@ export class AddCourseComponent implements OnInit {
     sendObject['code'] = this.secondFormGroup.value.code;
     sendObject['courseName'] = this.secondFormGroup.value.courseName;
     sendObject['teacherName'] = this.secondFormGroup.value.teacherName;
-    sendObject['site'] = this.forthFormGroup.value.site;
+    sendObject['site'] = this.forthFormGroup.value.classRoom;
     sendObject['date'] = this.thirdFormGroup.value.date;
     sendObject['time'] = this.classNumber;
     sendObject['require'] = this.secondFormGroup.value.require;

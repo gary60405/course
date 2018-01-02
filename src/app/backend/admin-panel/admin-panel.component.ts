@@ -20,8 +20,4 @@ export class AdminPanelComponent implements OnInit {
     this.user = this.authService.userInfo;
   }
 
-  onNavigate(url: string) {
-    this.router.navigateByUrl(url);
-  }
-
 }

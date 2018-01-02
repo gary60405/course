@@ -16,7 +16,9 @@ export class CourseTableComponent implements OnInit {
   year: number;
   semester: number;
   course: any = [];
+  user: string;
   ngOnInit() {
+    this.user = this.authService.userInfo['studentName'];
     this.collegeService.convertCourseCode(this.authService.userInfo['courseCode']);
     this.year = this.date.getFullYear() - 1911;
     this.semester = 6 < (this.date.getMonth() + 1) ? 1 : 2;
