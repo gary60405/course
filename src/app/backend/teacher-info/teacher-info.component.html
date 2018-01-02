@@ -1,3 +1,78 @@
-<p>
-  teacher-info works!
-</p>
+<div class="container-fluid">
+    <div class="row">
+        <mat-card class="mt-3 w-100 p-0">
+            <div class="list-group w-100 text-center">
+                <div class="bg-danger text-white card-header text-center font-weight-bold">教師資訊</div>
+                <div class="card-body card-padding">
+                    <form class="d-flex flex-row justify-content-around align-content-between"
+                        [formGroup]="teacherForm">
+                      <div class="form-position d-flex flex-row justify-content-around align-items-baseline align-content-between flex-nowrap">
+                        <mat-form-field class="setWidth">
+                            <mat-select formControlName="college" placeholder="學院" [(value)]="selected" (click)="onOpen()">
+                              <mat-option *ngFor="let row of mainService.CollegeList" [value]="row.college">
+                                {{row.college}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="setWidth">
+                            <mat-select formControlName="department" (valueChange)="getTeacherList()" placeholder="系所">
+                              <div *ngFor="let rows of mainService.CollegeList;">
+                                <div *ngIf="rows.college === selected">
+                                    <mat-option  *ngFor="let row of rows.dep" [value]="row.sim_department">
+                                        {{row.department}}
+                                      </mat-option>
+                                </div>
+                              </div>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="setWidth">
+                            <mat-select formControlName="teacherName"
+                                        placeholder="授課教授">
+                              <mat-option *ngFor="let row of backendService.teacherList" [value]="row">
+                                {{row}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <button mat-raised-button
+                                class="ml-2"
+                                color="warn"
+                                (click)="onSearch()">查詢</button>
+                    </div>
+                  </form>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    <div class="row">
+        <mat-card class="mt-3 w-100 p-0">
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let item of teacherInfo">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="title-width">
+                  {{item.level + '－' + item.courseName + '(' + item.code + ')'}}
+                </mat-panel-title>
+                <mat-panel-description>
+                  該門課有{{item.dataLength}}位學生
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">班級</th>
+                      <th scope="col">學號</th>
+                      <th scope="col">姓名</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let student of item.students">
+                      <td>{{student.studentID}}</td>
+                      <td>{{student.classLevel}}</td>
+                      <td>{{student.studentName}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </mat-card>
+    </div>
+  </div>

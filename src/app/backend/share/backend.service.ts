@@ -10,8 +10,10 @@ export class BackendService {
   public siteList: Site[];
   public teacherList: string[];
 
-  getTeacherList(department) {
-    let departmentList = [];
+  private allTeacherData: any;
+  private departmentList: any;
+
+  getAllTeacherList() {
     this.httpClient.get('https://garycourse.herokuapp.com/api/department/')
     .map((items: any[]) => {
       let i = items.length;
@@ -21,20 +23,18 @@ export class BackendService {
       return items;
     })
     .subscribe((data) => {
-      departmentList = data;
+      this.departmentList = data;
     });
     this.httpClient.get('https://garycourse.herokuapp.com/api/teacher/')
-    .map((rows: any[]) => {
-      rows = rows.filter(item => departmentList[item.department - 1] === department);
-      let i = rows.length;
-      while (i--) {
-        rows[i] = rows[i].teacherName;
-      }
-      return rows;
-    })
     .subscribe((data) => {
-      this.teacherList = data;
+      this.allTeacherData = data;
     });
+  }
+
+  getTeacherList(department) {
+    this.teacherList = this.allTeacherData
+                        .filter(item => this.departmentList[item['department'] - 1] === department)
+                        .map(item => item = item['teacherName']);
   }
 
   getSiteList() {

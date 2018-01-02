@@ -94,11 +94,6 @@
                                   {{row}}
                                 </mat-option>
                               </mat-select>
-                            <!-- <input formControlName="teacherName"
-                                   [(ngModel)]="teacherName"
-                                   matInput
-                                   placeholder="授課教授"
-                                   required> -->
                             <mat-error *ngIf="secondFormGroup.get('teacherName').hasError('required')">*必填項目</mat-error>
                           </mat-form-field>
                         </div>
