@@ -3,7 +3,7 @@
 ## Demo
 ### [https://gary60405.github.io/course/](https://gary60405.github.io/course/)
 ![](https://imgur.com/fDxZEuL.png)
-![](https://imgur.com/3SDZETy.png)
+![](https://imgur.com/Pj2n7du.png)
 
 ## Introduction
 以取代學校現行使用的系統為目標，用Material Design的精神，讓原本難看且不人性化的操作介面變得方便簡單。
