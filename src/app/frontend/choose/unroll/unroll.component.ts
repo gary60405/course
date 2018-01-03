@@ -22,6 +22,7 @@ export class UnrollComponent implements OnInit {
     this.collegeService.getUnrollData();
     const userID = this.authService.userInfo['studentID'];
     const unrollData = this.collegeService.UnrollData.filter(item => item.studentID === userID);
+    this.collegeService.convertCourseCode(this.authService.userInfo['courseCode']);
     this.selectedCourse = this.collegeService.selectedCourse.map(course => {
       const isFind = unrollData.find(data => data.code === course.code);
       if (isFind !== undefined) {
@@ -45,7 +46,6 @@ export class UnrollComponent implements OnInit {
       }
       return course;
     });
-    this.collegeService.convertCourseCode(this.authService.userInfo['courseCode']);
     let i = this.collegeService.selectedCourse.length;
     while (i--) {
       this.score += parseInt(this.collegeService.selectedCourse[i].score, 10);
