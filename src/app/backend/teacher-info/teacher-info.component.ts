@@ -39,12 +39,8 @@ export class TeacherInfoComponent implements OnInit {
     const courseList = this.mainService.CourseInfo
                         .filter(item => item.teacherName === teacherName);
     courseList.forEach(course => {
-      const teacherData = {};
       const tempList = [];
-      teacherData['code'] = course.code;
-      teacherData['level'] = course.level;
-      teacherData['courseName'] = course.courseName;
-      teacherData['teacherName'] = course.teacherName;
+      const teacherData = course;
       this.coreService.studentDataList.forEach(student => {
         const courseCode = student.courseCode.split(',');
         courseCode.forEach(code => {

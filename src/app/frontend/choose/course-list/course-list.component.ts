@@ -53,7 +53,7 @@ export class CourseListComponent implements OnInit, OnDestroy {
     this.collegeService.convertCourseCode(codeString);
     this.coreService.updateCourse(id, course);
     const unrollData = this.collegeService.UnrollData.find(data => data.code === code);
-    console.log(this.collegeService.UnrollData , unrollData);
+    // console.log(this.collegeService.UnrollData , unrollData);
     if (unrollData !== undefined) {
       this.collegeService.deleteUnrollData(unrollData.id);
     }

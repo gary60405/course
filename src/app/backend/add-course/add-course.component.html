@@ -7,8 +7,8 @@
           <div class="row">
             <div class="col-8">
               <mat-horizontal-stepper [linear]="true" [selectedIndex]="currentIndex">
-                <mat-step  [stepControl]="firstFormGroup">
-                  <form class="d-flex flex-row justify-content-around align-content-between" [formGroup]="firstFormGroup">
+                <mat-step  [stepControl]="oneFormGroup">
+                  <form class="d-flex flex-row justify-content-around align-content-between" [formGroup]="oneFormGroup">
                     <ng-template matStepLabel>開課單位</ng-template>
                     <div class="container form-position d-flex flex-column justify-content-around align-items-center align-content-between flex-nowrap">
                       <div class="row">
@@ -21,7 +21,7 @@
                               {{row.college}}
                             </mat-option>
                           </mat-select>
-                          <mat-error *ngIf="firstFormGroup.get('college').hasError('required')">*必填項目，填完才能選下一個</mat-error>
+                          <mat-error *ngIf="oneFormGroup.get('college').hasError('required')">*必填項目，填完才能選下一個</mat-error>
                         </mat-form-field>
                       </div>
                       <div class="row">
@@ -35,7 +35,7 @@
                               </div>
                             </div>
                           </mat-select>
-                          <mat-error *ngIf="firstFormGroup.get('department').hasError('required')">*必填項目</mat-error>
+                          <mat-error *ngIf="oneFormGroup.get('department').hasError('required')">*必填項目</mat-error>
                         </mat-form-field>
                       </div>
                       <div class="row">
@@ -46,11 +46,11 @@
                             <mat-option value="三">三年級</mat-option>
                             <mat-option value="四">四年級</mat-option>
                           </mat-select>
-                          <mat-error *ngIf="firstFormGroup.get('level').hasError('required')">*必填項目，填完才能前往下一步</mat-error>
+                          <mat-error *ngIf="oneFormGroup.get('level').hasError('required')">*必填項目，填完才能前往下一步</mat-error>
                         </mat-form-field>
                       </div>
                       <div class="row">
-                        <button [disabled]="firstFormGroup.invalid"
+                        <button [disabled]="oneFormGroup.invalid"
                                 (click)="setCurrentIndex(1)"
                                 mat-button
                                 matStepperNext>下一步</button>
@@ -58,8 +58,8 @@
                     </div>
                   </form>
                 </mat-step>
-                <mat-step [stepControl]="secondFormGroup">
-                  <form [formGroup]="secondFormGroup">
+                <mat-step [stepControl]="twoFormGroup">
+                  <form [formGroup]="twoFormGroup">
                     <ng-template matStepLabel>課程資訊</ng-template>
                     <div class="container form-position d-flex flex-column justify-content-around align-items-center align-content-between flex-nowrap">
                       <div class="row">
@@ -68,10 +68,12 @@
                             <input formControlName="code"
                                    [(ngModel)]="code"
                                    matInput
+                                   maxlength=6
                                    placeholder="課程代碼"
                                    required>
-                            <mat-error *ngIf="secondFormGroup.get('code').hasError('required')">*必填項目</mat-error>
-                            <mat-error *ngIf="secondFormGroup.get('code').hasError('checkCode')">*課程代碼重複</mat-error>
+                            <mat-error *ngIf="twoFormGroup.get('code').hasError('required')">*必填項目</mat-error>
+                            <mat-error *ngIf="twoFormGroup.get('code').hasError('pattern')">*請輸入六碼數字</mat-error>
+                            <mat-error *ngIf="twoFormGroup.get('code').hasError('checkCode')">*課程代碼重複</mat-error>
                           </mat-form-field>
                         </div>
                         <div class="col">
@@ -80,8 +82,10 @@
                                    [(ngModel)]="courseName"
                                    matInput
                                    placeholder="課程名稱"
+                                   maxlength=10
                                    required>
-                            <mat-error *ngIf="secondFormGroup.get('courseName').hasError('required')">*必填項目</mat-error>
+                            <mat-error *ngIf="twoFormGroup.get('courseName').hasError('required')">*必填項目</mat-error>
+                            <mat-error *ngIf="twoFormGroup.get('courseName').hasError('pattern')">*請輸入中文或英文</mat-error>
                           </mat-form-field>
                         </div>
                         <div class="col">
@@ -94,7 +98,7 @@
                                   {{row}}
                                 </mat-option>
                               </mat-select>
-                            <mat-error *ngIf="secondFormGroup.get('teacherName').hasError('required')">*必填項目</mat-error>
+                            <mat-error *ngIf="twoFormGroup.get('teacherName').hasError('required')">*必填項目</mat-error>
                           </mat-form-field>
                         </div>
                         <div class="col">
@@ -107,7 +111,7 @@
                                 <mat-option value="2">2</mat-option>
                                 <mat-option value="3">3</mat-option>
                               </mat-select>
-                              <mat-error *ngIf="secondFormGroup.get('score').hasError('required')">*必填項目</mat-error>
+                              <mat-error *ngIf="twoFormGroup.get('score').hasError('required')">*必填項目</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col">
@@ -118,7 +122,7 @@
                               <mat-option value="必修">必修</mat-option>
                               <mat-option value="選修">選修</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="secondFormGroup.get('require').hasError('required')">*必填項目</mat-error>
+                            <mat-error *ngIf="twoFormGroup.get('require').hasError('required')">*必填項目</mat-error>
                           </mat-form-field>
                         </div>
                       </div>
@@ -126,7 +130,7 @@
                         <button mat-button
                                 matStepperPrevious
                                 (click)="setCurrentIndex(0)">上一步</button>
-                        <button [disabled]="secondFormGroup.invalid"
+                        <button [disabled]="twoFormGroup.invalid"
                                 (click)="setCurrentIndex(2)"
                                 mat-button
                                 matStepperNext>下一步</button>
@@ -134,8 +138,8 @@
                     </div>
                   </form>
                 </mat-step>
-                <mat-step [stepControl]="thirdFormGroup">
-                  <form [formGroup]="thirdFormGroup">
+                <mat-step [stepControl]="threeFormGroup">
+                  <form [formGroup]="threeFormGroup">
                     <ng-template matStepLabel>課程時間</ng-template>
                     <div class="container form-position d-flex flex-column justify-content-around align-items-center align-content-between flex-nowrap">
                       <div class="row">
@@ -151,7 +155,7 @@
                               <mat-option value="星期五">星期五</mat-option>
                               <mat-option value="星期六">星期六</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="thirdFormGroup.get('date').hasError('required')">*必填項目</mat-error>
+                            <mat-error *ngIf="threeFormGroup.get('date').hasError('required')">*必填項目</mat-error>
                           </mat-form-field>
                         </div>
                       <div class="col">
@@ -162,7 +166,7 @@
                               <mat-option value="2">2</mat-option>
                               <mat-option value="1">1</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="thirdFormGroup.get('classNumber').hasError('required')">*必填項目，填完才能選下一個</mat-error>
+                            <mat-error *ngIf="threeFormGroup.get('classNumber').hasError('required')">*必填項目，填完才能選下一個</mat-error>
                           </mat-form-field>
                       </div>
                         <div class="col">
@@ -173,7 +177,7 @@
                                         placeholder="開始節次">
                               <mat-option *ngFor="let row of classList" value="{{row.value}}">{{row.view_value}}</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="thirdFormGroup.get('startClass').hasError('required')">*必填項目</mat-error>
+                            <mat-error *ngIf="threeFormGroup.get('startClass').hasError('required')">*必填項目</mat-error>
                           </mat-form-field>
                         </div>
                       </div>
@@ -181,7 +185,7 @@
                         <button mat-button
                                 matStepperPrevious
                                 (click)="setCurrentIndex(1)">上一步</button>
-                        <button [disabled]="thirdFormGroup.invalid"
+                        <button [disabled]="threeFormGroup.invalid"
                                 (click)="setCurrentIndex(3)"
                                 mat-button
                                 matStepperNext>下一步</button>
@@ -189,9 +193,9 @@
                     </div>
                   </form>
                 </mat-step>
-                <mat-step [stepControl]="forthFormGroup">
+                <mat-step [stepControl]="fourFormGroup">
                   <ng-template matStepLabel>課程地點</ng-template>
-                  <form [formGroup]="forthFormGroup">
+                  <form [formGroup]="fourFormGroup">
                     <div class="container form-position d-flex flex-column justify-content-around align-items-center align-content-between flex-nowrap">
                       <div class="row">
                         <div class="col">
@@ -202,7 +206,7 @@
                                         placeholder="校區">
                               <mat-option *ngFor="let item of backendService.siteList" value="{{item.district}}">{{item.district}}</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="forthFormGroup.get('district').hasError('required')">*必填項目，填完才能選下一個</mat-error>
+                            <mat-error *ngIf="fourFormGroup.get('district').hasError('required')">*必填項目，填完才能選下一個</mat-error>
                           </mat-form-field>
                         </div>
                         <div class="col">
@@ -217,7 +221,7 @@
                                 </div>
                               </div>
                             </mat-select>
-                            <mat-error *ngIf="forthFormGroup.get('site').hasError('required')">*必填項目，填完才能選下一個</mat-error>
+                            <mat-error *ngIf="fourFormGroup.get('site').hasError('required')">*必填項目，填完才能選下一個</mat-error>
                           </mat-form-field>
                         </div>
                         <div class="col">
@@ -235,8 +239,8 @@
                                     </div>
                                   </div>
                             </mat-select>
-                            <mat-error *ngIf="forthFormGroup.get('classRoom').hasError('required')">*必填項目，填完才能前往下一步</mat-error>
-                            <mat-error *ngIf="forthFormGroup.get('classRoom').hasError('checkSite')">
+                            <mat-error *ngIf="fourFormGroup.get('classRoom').hasError('required')">*必填項目，填完才能前往下一步</mat-error>
+                            <mat-error *ngIf="fourFormGroup.get('classRoom').hasError('checkSite')">
                               *本教室已安排課程，請避免選取以下教室：<span *ngFor="let classRoom of avoidClassRoom">{{classRoom}}</span>
                             </mat-error>
                           </mat-form-field>
@@ -246,7 +250,7 @@
                         <button mat-button
                                 matStepperPrevious
                                 (click)="setCurrentIndex(2)">上一步</button>
-                        <button [disabled]="forthFormGroup.invalid"
+                        <button [disabled]="fourFormGroup.invalid"
                                 (click)="setCurrentIndex(4)"
                                 mat-button
                                 matStepperNext>下一步</button>

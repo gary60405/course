@@ -16,10 +16,10 @@ export class AddCourseComponent implements OnInit {
   isLinear = false;
   classList = [];
   currentIndex: number;
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  thirdFormGroup: FormGroup;
-  forthFormGroup: FormGroup;
+  oneFormGroup: FormGroup;
+  twoFormGroup: FormGroup;
+  threeFormGroup: FormGroup;
+  fourFormGroup: FormGroup;
 
   constructor(public mainService: MainService,
               public backendService: BackendService,
@@ -49,24 +49,27 @@ export class AddCourseComponent implements OnInit {
     this.mainService.getCourseCode();
     this.mainService.getCollegeData();
     this.backendService.getSiteList();
-    this.firstFormGroup = new FormGroup({
+    this.backendService.getAllTeacherList();
+    this.oneFormGroup = new FormGroup({
       college: new FormControl('', [Validators.required, ]),
       department: new FormControl('', [Validators.required, ]),
       level: new FormControl('', [Validators.required, ])
     });
-    this.secondFormGroup = new FormGroup({
-      code: new FormControl('', [Validators.required, this.checkCodeValidator.bind(this)]),
-      courseName: new FormControl('', [Validators.required, ]),
+    this.twoFormGroup = new FormGroup({
+      code: new FormControl('', [Validators.required,
+                                 Validators.pattern('^[0-9]{6}$'),
+                                 this.checkCodeValidator.bind(this)]),
+      courseName: new FormControl('', [Validators.required, Validators.pattern('^[\u4e00-\u9fa5a-zA-Z()]+$')]),
       teacherName: new FormControl('', [Validators.required, ]),
       score: new FormControl('', [Validators.required, ]),
       require: new FormControl('', [Validators.required, ])
     });
-    this.thirdFormGroup = new FormGroup({
+    this.threeFormGroup = new FormGroup({
       date: new FormControl('', [Validators.required, ]),
       startClass: new FormControl('', [Validators.required, ]),
       classNumber: new FormControl('', [Validators.required, ])
     });
-    this.forthFormGroup = new FormGroup({
+    this.fourFormGroup = new FormGroup({
       district: new FormControl('', [Validators.required, ]),
       site: new FormControl('', [Validators.required, ]),
       classRoom: new FormControl('', [Validators.required, this.checkSiteValidator.bind(this)])
@@ -104,7 +107,6 @@ export class AddCourseComponent implements OnInit {
     if (this.avoidClassRoom.length !== 0) {
       this.avoidClassRoom = this.avoidClassRoom.map(item => item = item + '、');
       this.avoidClassRoom[this.avoidClassRoom.length - 1] = this.avoidClassRoom[this.avoidClassRoom.length - 1].slice(0, -1) + '。';
-      console.log(this.avoidClassRoom.length);
     }
     if (courseList.indexOf(control.value) !== -1) {
       return {'checkSite': true};
@@ -137,14 +139,14 @@ export class AddCourseComponent implements OnInit {
   }
   listFilter() {
     this.getClassList();
-    const classNumber = this.thirdFormGroup.value.classNumber - 1;
+    const classNumber = this.threeFormGroup.value.classNumber - 1;
     const filterNumber = this.classList.length - classNumber;
     this.classList = this.classList.filter((item) => item.value <= filterNumber);
   }
 
   getClass() {
-    const startClass = parseInt(this.thirdFormGroup.value.startClass, 10);
-    const classNumber = parseInt(this.thirdFormGroup.value.classNumber, 10);
+    const startClass = parseInt(this.threeFormGroup.value.startClass, 10);
+    const classNumber = parseInt(this.threeFormGroup.value.classNumber, 10);
     this.classNumber = '';
     let hexNumber = startClass;
     let i = classNumber;
@@ -155,12 +157,12 @@ export class AddCourseComponent implements OnInit {
     }
   }
   getTeacherList() {
-    const department = this.firstFormGroup.value.department;
+    const department = this.oneFormGroup.value.department;
     this.backendService.getTeacherList(department + '系');
   }
   getCollegeInfo() {
     this.mainService.getCollegeList();
-    console.log(this.mainService.CollegeList);
+    // console.log(this.mainService.CollegeList);
   }
   districtValueChange() {
     this.districtSite = '';
@@ -177,24 +179,24 @@ export class AddCourseComponent implements OnInit {
 
   submitForm() {
     const sendObject = {};
-    sendObject['code'] = this.secondFormGroup.value.code;
-    sendObject['courseName'] = this.secondFormGroup.value.courseName;
-    sendObject['teacherName'] = this.secondFormGroup.value.teacherName;
-    sendObject['site'] = this.forthFormGroup.value.classRoom;
-    sendObject['date'] = this.thirdFormGroup.value.date;
+    sendObject['code'] = this.twoFormGroup.value.code;
+    sendObject['courseName'] = this.twoFormGroup.value.courseName;
+    sendObject['teacherName'] = this.twoFormGroup.value.teacherName;
+    sendObject['site'] = this.fourFormGroup.value.classRoom;
+    sendObject['date'] = this.threeFormGroup.value.date;
     sendObject['time'] = this.classNumber;
-    sendObject['require'] = this.secondFormGroup.value.require;
-    sendObject['score'] = this.secondFormGroup.value.score;
+    sendObject['require'] = this.twoFormGroup.value.require;
+    sendObject['score'] = this.twoFormGroup.value.score;
     sendObject['level'] = this.department + this.level;
     this.httpClient.post('https://garycourse.herokuapp.com/api/course/', sendObject)
       .subscribe(
-        res => console.log(res),
-        err => console.log(err)
+        res => res,
+        err => err
       );
-    this.firstFormGroup.reset();
-    this.secondFormGroup.reset();
-    this.thirdFormGroup.reset();
-    this.forthFormGroup.reset();
+    this.oneFormGroup.reset();
+    this.twoFormGroup.reset();
+    this.threeFormGroup.reset();
+    this.fourFormGroup.reset();
     this.department = '';
     this.level = '';
     this.code = '';

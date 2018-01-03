@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
               public afAuth: AngularFireAuth,
               public httpClient: HttpClient,
               private router: Router) { }
+  isLogin = false;
   isNext = false;
   currentTabIndex = 0;
   hideForSignIn = true;
@@ -56,20 +57,21 @@ export class HomeComponent implements OnInit {
   onSignInSubmit() {
     const email = this.signInForm.value.email;
     const password = this.signInForm.value.password;
+    this.isLogin = true;
     this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(() => {
         this.openSnackBar('登入成功', 3000);
         this.authService.getUserInfo(this.afAuth.auth.currentUser.email);
         this.authService.authSubject.next();
         this.signInForm.reset();
-        if (this.afAuth.auth.currentUser.displayName === 'admin') {
+        if (this.authService.userInfo['isAdmin']) {
           this.router.navigate(['/admin']);
         } else {
           this.router.navigate(['/users']);
         }
       })
       .catch(err => {
-        console.log(err);
+        this.isLogin = false;
         if (err.code === 'auth/invalid-email') {
           this.openSnackBar('請輸入正確email格式', 3000);
         } else if (err.code === 'auth/wrong-password') {
@@ -92,11 +94,11 @@ export class HomeComponent implements OnInit {
     sendObject['studentName'] = this.signUpForm.value.name;
     sendObject['studentID'] = this.signUpForm.value.id;
     sendObject['classLevel'] = this.signUpForm.value.department + this.signUpForm.value.grade;
-    this.afAuth.auth.createUserWithEmailAndPassword(sendObject['account'], sendObject['password']).catch(err => console.log(err));
+    this.afAuth.auth.createUserWithEmailAndPassword(sendObject['account'], sendObject['password']).catch(err => err);
     this.httpClient.post('https://garycourse.herokuapp.com/api/student/', sendObject)
       .subscribe(
-        res => console.log(res),
-        err => console.log(err)
+        res => res,
+        err => err
       );
     this.openSnackBar();
     this.isNext = false;

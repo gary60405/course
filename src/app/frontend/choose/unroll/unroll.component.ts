@@ -19,10 +19,10 @@ export class UnrollComponent implements OnInit {
   btnText: string;
   selectedCourse = [];
   ngOnInit() {
+    this.collegeService.getUnrollData();
     const userID = this.authService.userInfo['studentID'];
     const unrollData = this.collegeService.UnrollData.filter(item => item.studentID === userID);
-    this.selectedCourse = this.collegeService.selectedCourse;
-    this.selectedCourse = this.selectedCourse.map(course => {
+    this.selectedCourse = this.collegeService.selectedCourse.map(course => {
       const isFind = unrollData.find(data => data.code === course.code);
       if (isFind !== undefined) {
         if (isFind.result === '核准') {
@@ -63,9 +63,8 @@ export class UnrollComponent implements OnInit {
     this.el.nativeElement.querySelector(`#btn_${index}`).setAttribute('class', 'mat-raised-button bg-secondary text-white');
     this.httpClient.post('https://garycourse.herokuapp.com/api/deleteCourse/', data)
       .subscribe(
-        res => console.log(res),
-        err => console.log(err)
+        res => res,
+        err => err
       );
-    // this.collegeService.selectedCourse[index];
   }
 }

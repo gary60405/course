@@ -33,8 +33,8 @@ export class CollegeService {
   deleteUnrollData(id) {
     this.httpClient.delete(`https://garycourse.herokuapp.com/api/deleteCourse/${id}/`)
       .subscribe(
-        res => console.log(res),
-        err => console.log(err)
+        res => res,
+        err => err
       );
   }
 }

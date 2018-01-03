@@ -55,11 +55,20 @@
                   該門課有{{item.dataLength}}位學生
                 </mat-panel-description>
               </mat-expansion-panel-header>
-              <table class="table">
+              <span class="badge" [ngClass]="{'badge-primary':item.require === '必修',
+                                              'badge-secondary':item.require === '選修'}"
+              >{{item.require}}</span>
+              <span class="badge" [ngClass]="{'badge-danger':item.score === '3',
+                                              'badge-warning':item.score === '2',
+                                              'badge-success':item.score === '1'}"
+              >{{item.score + '學分'}}</span>
+              <span class="badge badge-light">{{item.site}}</span>
+              <span class="badge badge-light">{{item.date + '(' + item.time + ')'}}</span>
+              <table class="table table-hover mt-2">
                   <thead>
                     <tr>
-                      <th scope="col">班級</th>
                       <th scope="col">學號</th>
+                      <th scope="col">班級</th>
                       <th scope="col">姓名</th>
                     </tr>
                   </thead>

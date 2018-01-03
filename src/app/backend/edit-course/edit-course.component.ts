@@ -4,6 +4,7 @@ import { FormGroup, FormControl} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { BackendService } from '../share/backend.service';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-edit-course',
@@ -16,6 +17,7 @@ export class EditCourseComponent implements OnInit {
   constructor(public mainService: MainService,
               public backendService: BackendService,
               public snackBar: MatSnackBar,
+              public afAuth: AngularFireAuth,
               private httpClient: HttpClient) { }
 
   courseForm: FormGroup;
@@ -87,12 +89,14 @@ export class EditCourseComponent implements OnInit {
       this.courseInfo[this.currentIndex] = obj;
       const index = this.searchCourseInfoNumber(obj.id);
       this.mainService.CourseInfo[index] = obj;
-      console.log(this.courseInfo[this.currentIndex], this.mainService.CourseInfo[index]);
-      this.httpClient.patch(`https://garycourse.herokuapp.com/api/course/${obj.id}/`, this.editForm.value)
-      .subscribe(
-          res => console.log(res),
-          err => console.log(err)
-        );
+      if (this.afAuth.auth.currentUser.displayName === 'admin') {
+        this.httpClient.patch(`https://garycourse.herokuapp.com/api/course/${obj.id}/`, this.editForm.value)
+          .subscribe(
+              res => res,
+              err => err
+            );
+      }
+
       this.editForm.reset();
     } else {
       this.snackBar.open('無效的動作!', '確認', {
@@ -111,11 +115,13 @@ export class EditCourseComponent implements OnInit {
       this.courseInfo.splice(this.currentIndex, 1);
       const index = this.searchCourseInfoNumber(obj.id);
       this.mainService.CourseInfo.splice(index, 1);
+      if (this.afAuth.auth.currentUser.displayName === 'admin') {
       this.httpClient.delete(`https://garycourse.herokuapp.com/api/course/${obj.id}/`, this.editForm.value)
       .subscribe(
-          res => console.log(res),
-          err => console.log(err)
+          res => res,
+          err => err
         );
+      }
       this.editForm.reset();
     } else {
       this.snackBar.open('無效的動作!', '確認', {

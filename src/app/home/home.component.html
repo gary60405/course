@@ -32,8 +32,10 @@
                     <button class="home"
                             color="accent"
                             type="submit"
+                            *ngIf="!isLogin"
                             mat-raised-button
                             [disabled]="signInForm.invalid">登入</button>
+                    <mat-spinner strokeWidth="2" *ngIf="isLogin" color="accent"></mat-spinner>
                   </form>
             </mat-tab>
 

@@ -31,7 +31,7 @@ export class CourseTableComponent implements OnInit {
       }
       this.course.push(temp);
     }
-    console.log(this.course);
+    // console.log(this.course);
     this.updateCourse();
   }
 

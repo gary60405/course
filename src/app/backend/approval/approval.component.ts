@@ -51,9 +51,11 @@ export class ApprovalComponent implements OnInit {
                           .filter(data => data.studentID === id && data.result === 'apply')
                           .map(data => {
                             const course = this.mainService.searchCourseData(data.code);
-                            data['courseName'] = course.courseName;
-                            data['level'] = course.level;
-                            data['teacherName'] = course.teacherName;
+                            if (course !== undefined) {
+                              data['courseName'] = course.courseName;
+                              data['level'] = course.level;
+                              data['teacherName'] = course.teacherName;
+                            }
                             return data;
                           });
       userData['studentID'] = user.studentID;
@@ -63,7 +65,7 @@ export class ApprovalComponent implements OnInit {
       userData['dataLength'] = applyData.length;
       this.userInfo.push(userData);
     });
-    console.log(this.userInfo);
+    // console.log(this.userInfo);
   }
 
   getuserLevel(studentID: string) {
@@ -76,8 +78,8 @@ export class ApprovalComponent implements OnInit {
     unrollData['result'] = reply;
     this.httpClient.patch(`https://garycourse.herokuapp.com/api/deleteCourse/${id}/`, unrollData)
       .subscribe(
-        res => console.log(res),
-        err => console.log(err)
+        res => res,
+        err => err
       );
     this.collegeService.UnrollData = this.collegeService.UnrollData.filter(item => item.id !== id);
     this.onSearch();

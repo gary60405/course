@@ -88,9 +88,7 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
       width: '250px',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    dialogRef.afterClosed().subscribe(result => result);
   }
 
 
@@ -106,7 +104,7 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
       this.isSelectSuccess = false;
       this.displayAlert();
     }
-    console.log(this.collegeService.selectedCourse);
+    // console.log(this.collegeService.selectedCourse);
   }
 
   searchList(code: string) {
